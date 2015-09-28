@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:text="Uruchom system"
         android:id="@+id/bUruchom"
+        android:onClick="mUruchom"
         android:layout_above="@+id/bStatystki"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp" />
