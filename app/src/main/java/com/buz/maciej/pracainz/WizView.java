@@ -16,16 +16,24 @@ public class WizView extends View {
 
     private ShapeDrawable bloczek;
 
-    public WizView(Context context) {
+    private int[][] mapa = new int[200][200];
+
+
+    public WizView(Context context)
+    {
         super(context);
     }
 
-    public WizView(Context context, AttributeSet attrs) {
+    public WizView(Context context, AttributeSet attrs)
+    {
         super(context, attrs);
+
     }
 
-    public WizView(Context context, AttributeSet attrs, int defStyle) {
+    public WizView(Context context, AttributeSet attrs, int defStyle)
+    {
         super(context, attrs, defStyle);
+
     }
 
 
@@ -34,10 +42,18 @@ public class WizView extends View {
         super.onDraw(canvas);
 
         bloczek = new ShapeDrawable();
-        bloczek.getPaint().setColor(0xff565789);
-        bloczek.setBounds(200, 300, 500, 400);
 
-        bloczek.draw(canvas);
+        for (int i=0; i<100; i++)
+        {
+            for ( int j=0; j<100; j++)
+            {
+                if ((i+j)%2==0) bloczek.getPaint().setColor(0xffffffff);
+                if ((i+j)%2==1) bloczek.getPaint().setColor(0xff565789);
+                bloczek.setBounds(i* 4, j * 4, (i+1)*4, (j+1)*4);
+                bloczek.draw(canvas);
+            }
+        }
+
         invalidate();
     }
 }
