@@ -7,7 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 
 public class SystemActivity extends ActionBarActivity {
@@ -45,15 +51,22 @@ public class SystemActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void mWczytaj(View wiew)
+    public void mWczytaj(View view)
     {
-        String FILENAME = "mapa";
-        String string = "hello world!";
+        InputStream is = this.getResources().openRawResource(R.raw.mapa);
+        int i=0;
 
-        try {
-            FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            fos.write(string.getBytes());
-            fos.close();
-            } catch (Exception e){e.printStackTrace();}
+        BufferedInputStream buf = new BufferedInputStream(is);
+
+        if (is != null) {
+            try {
+                while ((test[i] = buf.read()) != -1) {
+                    i++;
+                }
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
