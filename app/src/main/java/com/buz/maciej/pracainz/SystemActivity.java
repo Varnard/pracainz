@@ -18,9 +18,6 @@ import java.io.InputStreamReader;
 
 public class SystemActivity extends ActionBarActivity {
 
-    private int[] test = new int[10];
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,20 +50,6 @@ public class SystemActivity extends ActionBarActivity {
 
     public void mWczytaj(View view)
     {
-        InputStream is = this.getResources().openRawResource(R.raw.mapa);
-        int i=0;
 
-        BufferedInputStream buf = new BufferedInputStream(is);
-
-        if (is != null) {
-            try {
-                while ((test[i] = buf.read()) != -1) {
-                    i++;
-                }
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
