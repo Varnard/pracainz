@@ -25,8 +25,9 @@
         <Button
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/button"
+            android:text="Wczytaj"
+            android:id="@+id/bWczytaj"
+            android:onClick="mWczytaj"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/view"
             android:layout_toEndOf="@+id/view" />
