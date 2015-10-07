@@ -48,8 +48,17 @@ public class SystemActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void mWczytaj(View view)
+    public void mcase1(View view)
     {
+        WizView wizView = (WizView)findViewById(R.id.WizView);
+        wizView.wyznaczTrase1();
+        wizView.Tcase=1;
+    }
 
+    public void mcase2(View view)
+    {
+        WizView wizView = (WizView)findViewById(R.id.WizView);
+        wizView.wyznaczTrase2();
+        wizView.Tcase=2;
     }
 }

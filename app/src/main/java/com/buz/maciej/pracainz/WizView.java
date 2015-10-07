@@ -24,23 +24,45 @@ public class WizView extends View {
 
     private boolean[] test = new boolean[200];
 
+    Pole poczatek0 = new Pole(1,1,0);
+    Pole koniec0 = new Pole(2,2,-1);
+    Droga Trasa0;
+    Pole poczatek = new Pole(2,2,0);
+    Pole koniec = new Pole(7,7,-1);
+    Droga Trasa;
+    Pole poczatek2 = new Pole(5,5,0);
+    Pole koniec2 = new Pole(1,5,-1);
+    Droga Trasa2;
+    int Tcase;
 
     public WizView(Context context)
     {
         super(context);
         zaladujMape();
+        Trasa0 = new Droga(10,poczatek0,koniec0,mapa);
+        Trasa = new Droga(10,poczatek,koniec,mapa);
+        Trasa2 = new Droga(10,poczatek2,koniec2,mapa);
+
     }
 
     public WizView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         zaladujMape();
+        Trasa0 = new Droga(10,poczatek0,koniec0,mapa);
+        Trasa = new Droga(10,poczatek,koniec,mapa);
+        Trasa2 = new Droga(10,poczatek2,koniec2,mapa);
+
     }
 
     public WizView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
         zaladujMape();
+        Trasa0 = new Droga(10,poczatek0,koniec0,mapa);
+        Trasa = new Droga(10,poczatek,koniec,mapa);
+        Trasa2 = new Droga(10,poczatek2,koniec2,mapa);
+
     }
 
 
@@ -61,7 +83,28 @@ public class WizView extends View {
             }
         }
 
+
+
+        Paint paint = new Paint();
+        paint.setColor(0xff000000);
+        paint.setTextSize(40);
+        if (Tcase==0)rysujTrase(Trasa0, canvas, paint);
+        if (Tcase==1)rysujTrase(Trasa, canvas, paint);
+        if (Tcase==2)rysujTrase(Trasa2, canvas, paint);
+        
+
+
         invalidate();
+    }
+
+    public void wyznaczTrase1()
+    {
+        Trasa.obliczTrase();
+    }
+
+    public void wyznaczTrase2()
+    {
+        Trasa2.obliczTrase();
     }
 
      private void zaladujMape()
@@ -96,10 +139,47 @@ public class WizView extends View {
          {
              for (int j=0;j<10;j++)
              {
-                mapa[i][j]=(test[k]);
+                mapa[j][i]=(test[k]);
                  k++;
              }
          }
      }
+
+    private void rysujTrase(Droga Trasa, Canvas canvas, Paint paint)
+    {
+        for (int i=0; i<10; i++)
+        {
+            for ( int j=0; j<10; j++)
+            {
+                for (Integer k=-2; k<100;k++)
+                {
+                    if (Trasa.mapa[i][j].getWartosc()==k)
+                    {
+                        if (k<0)
+                        {
+                            canvas.drawText(k.toString(), (i * 40) + 5, ((j + 1) * 40) - 5, paint);
+                        }
+                        if (k>-1&k<10)
+                        {
+                            canvas.drawText(k.toString(), (i * 40) + 10, ((j + 1) * 40) - 5, paint);
+                        }
+                        if (k>9)
+                        {
+                            canvas.drawText(k.toString(), (i * 40), ((j + 1) * 40) - 5, paint);
+                        }
+                    }
+                }
+            }
+        }
+
+        bloczek.getPaint().setColor(0x600000ff);
+        bloczek.setBounds(Trasa.poczatek.getX() * 40, Trasa.poczatek.getY() * 40,
+                (Trasa.poczatek.getX() + 1) * 40, (Trasa.poczatek.getY() + 1) * 40);
+        bloczek.draw(canvas);
+        bloczek.getPaint().setColor(0x6000ff00);
+        bloczek.setBounds(Trasa.koniec.getX()*40, Trasa.koniec.getY() * 40,
+                (Trasa.koniec.getX()+1)*40,(Trasa.koniec.getY()+1)*40);
+        bloczek.draw(canvas);
+    }
 }
 

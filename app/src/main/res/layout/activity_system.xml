@@ -7,31 +7,33 @@
     tools:context="com.buz.maciej.pracainz.SystemActivity">
 
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+
+    <com.buz.maciej.pracainz.WizView
+        android:layout_width="240dp"
+        android:layout_height="240dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/WizView" />
 
-        <com.buz.maciej.pracainz.WizView
-            android:layout_width="240dp"
-            android:layout_height="240dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/view" />
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="case1"
+        android:id="@+id/bcase1"
+        android:onClick="mcase1"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/WizView"
+        android:layout_toEndOf="@+id/WizView" />
 
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:text="Wczytaj"
-            android:id="@+id/bWczytaj"
-            android:onClick="mWczytaj"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/view"
-            android:layout_toEndOf="@+id/view" />
-
-    </RelativeLayout>
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="case2"
+        android:id="@+id/bcase2"
+        android:onClick="mcase2"
+        android:layout_below="@+id/bcase1"
+        android:layout_toRightOf="@+id/WizView"
+        android:layout_toEndOf="@+id/WizView" />/>
 
 </RelativeLayout>
