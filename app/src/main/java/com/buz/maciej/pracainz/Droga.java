@@ -1,6 +1,7 @@
 package com.buz.maciej.pracainz;
 
 import java.util.LinkedList;
+import java.util.Stack;
 
 
 /**
@@ -10,6 +11,7 @@ import java.util.LinkedList;
 public class Droga {
 
     private LinkedList kolejka = new LinkedList();
+    private Stack trasa = new Stack();
 
     Pole[][] mapa;
     Pole poczatek;
@@ -46,9 +48,8 @@ public class Droga {
                aktualne = (Pole) kolejka.remove();
                 mapa[aktualne.getX()][aktualne.getY()].setWartosc(aktualne.getWartosc());
 
-                Pole[] otoczeniePola = zwrocSasiednie(aktualne);
-
-                for (Pole sprawdzane: otoczeniePola) {
+                 for (Pole sprawdzane: zwrocSasiednie(aktualne))
+                 {
                     if (sprawdzane.getWartosc()==-1)
                     {
                         sprawdzane.setWartosc(aktualne.getWartosc()+1);
@@ -62,7 +63,31 @@ public class Droga {
             e.printStackTrace();
         }
 
+        trasa.push(mapa[koniec.getX()][koniec.getY()]);
+
+        int i= mapa[koniec.getX()][koniec.getY()].getWartosc();
+
+        while(i!=0)
+        {
+            for (Pole sprawdzane: zwrocSasiednie((Pole)trasa.peek()))
+            {
+             if (sprawdzane.getWartosc()==((Pole)trasa.peek()).getWartosc()-1)
+             {
+               trasa.add(sprawdzane);
+                 break;
+             }
+            }
+            i--;
+        }
+
+
     }
+
+    public Stack zwrocTrase()
+    {
+        return trasa;
+    }
+
 
     private Pole[] zwrocSasiednie(Pole baza)
     {

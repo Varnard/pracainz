@@ -14,6 +14,8 @@ import android.view.View;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
+import java.util.Stack;
 
 
 public class WizView extends View {
@@ -177,9 +179,21 @@ public class WizView extends View {
                 (Trasa.poczatek.getX() + 1) * 40, (Trasa.poczatek.getY() + 1) * 40);
         bloczek.draw(canvas);
         bloczek.getPaint().setColor(0x6000ff00);
-        bloczek.setBounds(Trasa.koniec.getX()*40, Trasa.koniec.getY() * 40,
-                (Trasa.koniec.getX()+1)*40,(Trasa.koniec.getY()+1)*40);
+        bloczek.setBounds(Trasa.koniec.getX() * 40, Trasa.koniec.getY() * 40,
+                (Trasa.koniec.getX() + 1) * 40, (Trasa.koniec.getY() + 1) * 40);
         bloczek.draw(canvas);
+
+        bloczek.getPaint().setColor(0x60ff0000);
+        //Stack sciezka=Trasa.zwrocTrase();
+        Iterator iterator = Trasa.zwrocTrase().iterator();
+
+        while (iterator.hasNext())
+        {
+            Pole next = (Pole)iterator.next();
+            bloczek.setBounds(next.getX()*40, next.getY() * 40,(next.getX()+1)*40,(next.getY()+1)*40);
+            bloczek.draw(canvas);
+        }
+        
     }
 }
 
