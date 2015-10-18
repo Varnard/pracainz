@@ -69,7 +69,8 @@ public class WizView extends View {
 
 
     @Override
-    protected void onDraw(Canvas canvas)  {
+    protected void onDraw(Canvas canvas)
+    {
         super.onDraw(canvas);
 
         bloczek = new ShapeDrawable();
@@ -185,7 +186,7 @@ public class WizView extends View {
 
         bloczek.getPaint().setColor(0x60ff0000);
         //Stack sciezka=Trasa.zwrocTrase();
-        Iterator iterator = Trasa.zwrocTrase().iterator();
+        Iterator iterator = ((Stack)Trasa.zwrocTrase()).iterator();
 
         while (iterator.hasNext())
         {

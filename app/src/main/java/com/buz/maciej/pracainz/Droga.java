@@ -80,14 +80,30 @@ public class Droga {
             i--;
         }
 
-
+    obliczona=true;
     }
 
-    public Stack zwrocTrase()
+    public Object zwrocTrase()
     {
-        return trasa;
+        if (obliczona==true)return trasa;
+        else return false;
     }
 
+    public void bladTrasy()
+    {
+        obliczona=false;
+    }
+
+    public Pole zwrocNastepnePole()
+    {
+     return (Pole)trasa.peek();
+    }
+
+
+    public void poleWykonane()
+    {
+     trasa.pop();
+    }
 
     private Pole[] zwrocSasiednie(Pole baza)
     {
