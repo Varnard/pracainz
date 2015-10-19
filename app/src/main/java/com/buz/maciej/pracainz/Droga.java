@@ -83,10 +83,9 @@ public class Droga {
     obliczona=true;
     }
 
-    public Object zwrocTrase()
+    public Stack zwrocTrase()
     {
-        if (obliczona==true)return trasa;
-        else return false;
+        return trasa;
     }
 
     public void bladTrasy()

@@ -36,6 +36,7 @@ public class WizView extends View {
     Pole koniec2 = new Pole(1,5,-1);
     Droga Trasa2;
     int Tcase;
+    int krok;
 
     public WizView(Context context)
     {
@@ -188,11 +189,16 @@ public class WizView extends View {
         //Stack sciezka=Trasa.zwrocTrase();
         Iterator iterator = ((Stack)Trasa.zwrocTrase()).iterator();
 
+        int tmpkrok = krok;
         while (iterator.hasNext())
         {
             Pole next = (Pole)iterator.next();
-            bloczek.setBounds(next.getX()*40, next.getY() * 40,(next.getX()+1)*40,(next.getY()+1)*40);
-            bloczek.draw(canvas);
+            if (tmpkrok>0)
+            {
+                bloczek.setBounds(next.getX()*40, next.getY() * 40,(next.getX()+1)*40,(next.getY()+1)*40);
+                bloczek.draw(canvas);
+            }
+            tmpkrok--;
         }
         
     }
