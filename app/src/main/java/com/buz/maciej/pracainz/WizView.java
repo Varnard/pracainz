@@ -20,11 +20,7 @@ import java.util.Stack;
 
 public class WizView extends View {
 
-    private ShapeDrawable bloczek;
-
-    private boolean[][] mapa = new boolean[10][10];
-
-    private boolean[] test = new boolean[200];
+    Mapa mapa;
 
     Pole poczatek0 = new Pole(1,1,0);
     Pole koniec0 = new Pole(2,2,-1);
@@ -36,35 +32,37 @@ public class WizView extends View {
     Pole koniec2 = new Pole(1,5,-1);
     Droga Trasa2;
     int Tcase;
-    int krok;
+
+    int krok=0;
+
 
     public WizView(Context context)
     {
         super(context);
-        zaladujMape();
-        Trasa0 = new Droga(10,poczatek0,koniec0,mapa);
-        Trasa = new Droga(10,poczatek,koniec,mapa);
-        Trasa2 = new Droga(10,poczatek2,koniec2,mapa);
+        mapa = new Mapa(context);
+        Trasa0 = new Droga(10,poczatek0,koniec0,mapa.getKrawedzie());
+        Trasa = new Droga(10,poczatek,koniec,mapa.getKrawedzie());
+        Trasa2 = new Droga(10,poczatek2,koniec2,mapa.getKrawedzie());
 
     }
 
     public WizView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        zaladujMape();
-        Trasa0 = new Droga(10,poczatek0,koniec0,mapa);
-        Trasa = new Droga(10,poczatek,koniec,mapa);
-        Trasa2 = new Droga(10,poczatek2,koniec2,mapa);
+        mapa = new Mapa(context);
+        Trasa0 = new Droga(10,poczatek0,koniec0,mapa.getKrawedzie());
+        Trasa = new Droga(10,poczatek,koniec,mapa.getKrawedzie());
+        Trasa2 = new Droga(10,poczatek2,koniec2,mapa.getKrawedzie());
 
     }
 
     public WizView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
-        zaladujMape();
-        Trasa0 = new Droga(10,poczatek0,koniec0,mapa);
-        Trasa = new Droga(10,poczatek,koniec,mapa);
-        Trasa2 = new Droga(10,poczatek2,koniec2,mapa);
+        mapa = new Mapa(context);
+        Trasa0 = new Droga(10,poczatek0,koniec0,mapa.getKrawedzie());
+        Trasa = new Droga(10,poczatek,koniec,mapa.getKrawedzie());
+        Trasa2 = new Droga(10,poczatek2,koniec2,mapa.getKrawedzie());
 
     }
 
@@ -74,29 +72,16 @@ public class WizView extends View {
     {
         super.onDraw(canvas);
 
-        bloczek = new ShapeDrawable();
-
-        for (int i=0; i<10; i++)
-        {
-            for ( int j=0; j<10; j++)
-            {
-                if (mapa[i][j]==false) bloczek.getPaint().setColor(0xffffffff);
-                if (mapa[i][j]==true) bloczek.getPaint().setColor(0xff565789);
-                bloczek.setBounds(i* 40, j * 40, (i+1)*40, (j+1)*40);
-                bloczek.draw(canvas);
-            }
-        }
-
-
-
         Paint paint = new Paint();
         paint.setColor(0xff000000);
         paint.setTextSize(40);
-        if (Tcase==0)rysujTrase(Trasa0, canvas, paint);
-        if (Tcase==1)rysujTrase(Trasa, canvas, paint);
-        if (Tcase==2)rysujTrase(Trasa2, canvas, paint);
-        
 
+        mapa.draw(canvas);
+
+        if (Tcase==0)Trasa0.draw(canvas, krok);
+        if (Tcase==1)Trasa.draw(canvas, krok);
+        if (Tcase==2)Trasa2.draw(canvas, krok);
+        
 
         invalidate();
     }
@@ -106,101 +91,12 @@ public class WizView extends View {
         Trasa.obliczTrase();
     }
 
-    public void wyznaczTrase2()
+      void wyznaczTrase2()
     {
         Trasa2.obliczTrase();
     }
 
-     private void zaladujMape()
-     {
-         InputStream is = this.getResources().openRawResource(R.raw.mapa);
 
-         BufferedInputStream buf = new BufferedInputStream(is);
 
-         if (is != null) {
-             int i=0;
-             int tmp=0;
-             try {
-                 while ((tmp=buf.read()) != -1) {
-                     if(tmp==48)
-                     {
-                         test[i] = false;
-                         i++;
-                     }
-                     if(tmp==49)
-                     {
-                         test[i] = true;
-                         i++;
-                     }
-                 }
-                 is.close();
-             } catch (IOException e) {
-                 e.printStackTrace();
-             }
-         }
-         int k=0;
-         for (int i=0; i<10; i++)
-         {
-             for (int j=0;j<10;j++)
-             {
-                mapa[j][i]=(test[k]);
-                 k++;
-             }
-         }
-     }
-
-    private void rysujTrase(Droga Trasa, Canvas canvas, Paint paint)
-    {
-        for (int i=0; i<10; i++)
-        {
-            for ( int j=0; j<10; j++)
-            {
-                for (Integer k=-2; k<100;k++)
-                {
-                    if (Trasa.mapa[i][j].getWartosc()==k)
-                    {
-                        if (k<0)
-                        {
-                            canvas.drawText(k.toString(), (i * 40) + 5, ((j + 1) * 40) - 5, paint);
-                        }
-                        if (k>-1&k<10)
-                        {
-                            canvas.drawText(k.toString(), (i * 40) + 10, ((j + 1) * 40) - 5, paint);
-                        }
-                        if (k>9)
-                        {
-                            canvas.drawText(k.toString(), (i * 40), ((j + 1) * 40) - 5, paint);
-                        }
-                    }
-                }
-            }
-        }
-
-        bloczek.getPaint().setColor(0x600000ff);
-        bloczek.setBounds(Trasa.poczatek.getX() * 40, Trasa.poczatek.getY() * 40,
-                (Trasa.poczatek.getX() + 1) * 40, (Trasa.poczatek.getY() + 1) * 40);
-        bloczek.draw(canvas);
-        bloczek.getPaint().setColor(0x6000ff00);
-        bloczek.setBounds(Trasa.koniec.getX() * 40, Trasa.koniec.getY() * 40,
-                (Trasa.koniec.getX() + 1) * 40, (Trasa.koniec.getY() + 1) * 40);
-        bloczek.draw(canvas);
-
-        bloczek.getPaint().setColor(0x60ff0000);
-        //Stack sciezka=Trasa.zwrocTrase();
-        Iterator iterator = ((Stack)Trasa.zwrocTrase()).iterator();
-
-        int tmpkrok = krok;
-        while (iterator.hasNext())
-        {
-            Pole next = (Pole)iterator.next();
-            if (tmpkrok>0)
-            {
-                bloczek.setBounds(next.getX()*40, next.getY() * 40,(next.getX()+1)*40,(next.getY()+1)*40);
-                bloczek.draw(canvas);
-            }
-            tmpkrok--;
-        }
-        
-    }
 }
 

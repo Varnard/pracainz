@@ -18,7 +18,6 @@ public class Pole {
         this.wartosc=wartosc;
     }
 
-
     public void setWartosc(int wartosc) {
         this.wartosc = wartosc;
     }
