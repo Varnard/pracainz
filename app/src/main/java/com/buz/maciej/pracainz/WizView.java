@@ -40,9 +40,9 @@ public class WizView extends View {
     {
         super(context);
         mapa = new Mapa(context);
-        Trasa0 = new Droga(10,poczatek0,koniec0,mapa.getKrawedzie());
-        Trasa = new Droga(10,poczatek,koniec,mapa.getKrawedzie());
-        Trasa2 = new Droga(10,poczatek2,koniec2,mapa.getKrawedzie());
+        Trasa0 = new Droga(1,poczatek0,koniec0,mapa.getKrawedzie());
+        Trasa = new Droga(1,poczatek,koniec,mapa.getKrawedzie());
+        Trasa2 = new Droga(1,poczatek2,koniec2,mapa.getKrawedzie());
 
     }
 
@@ -50,9 +50,9 @@ public class WizView extends View {
     {
         super(context, attrs);
         mapa = new Mapa(context);
-        Trasa0 = new Droga(10,poczatek0,koniec0,mapa.getKrawedzie());
-        Trasa = new Droga(10,poczatek,koniec,mapa.getKrawedzie());
-        Trasa2 = new Droga(10,poczatek2,koniec2,mapa.getKrawedzie());
+        Trasa0 = new Droga(1,poczatek0,koniec0,mapa.getKrawedzie());
+        Trasa = new Droga(1,poczatek,koniec,mapa.getKrawedzie());
+        Trasa2 = new Droga(1,poczatek2,koniec2,mapa.getKrawedzie());
 
     }
 
@@ -60,9 +60,9 @@ public class WizView extends View {
     {
         super(context, attrs, defStyle);
         mapa = new Mapa(context);
-        Trasa0 = new Droga(10,poczatek0,koniec0,mapa.getKrawedzie());
-        Trasa = new Droga(10,poczatek,koniec,mapa.getKrawedzie());
-        Trasa2 = new Droga(10,poczatek2,koniec2,mapa.getKrawedzie());
+        Trasa0 = new Droga(1,poczatek0,koniec0,mapa.getKrawedzie());
+        Trasa = new Droga(1,poczatek,koniec,mapa.getKrawedzie());
+        Trasa2 = new Droga(1,poczatek2,koniec2,mapa.getKrawedzie());
 
     }
 
@@ -71,10 +71,6 @@ public class WizView extends View {
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
-
-        Paint paint = new Paint();
-        paint.setColor(0xff000000);
-        paint.setTextSize(40);
 
         mapa.draw(canvas);
 

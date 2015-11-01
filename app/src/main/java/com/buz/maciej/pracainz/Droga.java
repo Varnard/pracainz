@@ -27,17 +27,17 @@ public class Droga {
     int rozmiar;
     Boolean obliczona;
 
-    Droga(int rozmiar, Pole poczatek, Pole koniec, boolean[][] krawedzie)
+    Droga(int nrmapy, Pole poczatek, Pole koniec, boolean[][] krawedzie)
     {
-        mapa = new Pole[rozmiar][rozmiar];
-        this.rozmiar=rozmiar;
+        if (nrmapy==1)  this.rozmiar=10;                                                             //<--
+        mapa = new Pole[rozmiar][rozmiar];                                                           //<--
         this.poczatek = poczatek;
         this.koniec = koniec;
 
 
-        for (int i=0; i<rozmiar;i++)
+        for (int i=0; i<rozmiar;i++)                                                                 //<--
         {
-            for (int j=0; j<rozmiar; j++)
+            for (int j=0; j<rozmiar; j++)                                                            //<--
             {
                 if (krawedzie[i][j]==true) mapa[i][j]= new Pole(i,j,-2);
                 if (krawedzie[i][j]==false) mapa[i][j]= new Pole(i,j,-1);
@@ -61,7 +61,17 @@ public class Droga {
                     if (sprawdzane.getWartosc()==-1)
                     {
                         sprawdzane.setWartosc(aktualne.getWartosc()+1);
-                        mapa[sprawdzane.getX()][sprawdzane.getY()].setWartosc(aktualne.getWartosc()+1);
+                        mapa[sprawdzane.getX()][sprawdzane.getY()].setWartosc(sprawdzane.getWartosc());
+                        kolejka.add(sprawdzane);
+                    }
+                }
+
+                for (Pole sprawdzane: zwrocSasiednieSkos(aktualne))
+                {
+                    if (sprawdzane.getWartosc()==-1)
+                    {
+                        sprawdzane.setWartosc(aktualne.getWartosc()+1.5);
+                        mapa[sprawdzane.getX()][sprawdzane.getY()].setWartosc(sprawdzane.getWartosc());
                         kolejka.add(sprawdzane);
                     }
                 }
@@ -75,17 +85,22 @@ public class Droga {
 
         trasa.push(mapa[koniec.getX()][koniec.getY()]);
 
-        int i= mapa[koniec.getX()][koniec.getY()].getWartosc();
+        double i= mapa[koniec.getX()][koniec.getY()].getWartosc();
 
-        while(i!=0)
+        while(i>0)
         {
             for (Pole sprawdzane: zwrocSasiednie((Pole)trasa.peek()))
             {
-             if (sprawdzane.getWartosc()==((Pole)trasa.peek()).getWartosc()-1)
-             {
-               trasa.add(sprawdzane);
-                 break;
-             }
+                if (sprawdzane.getWartosc()==((Pole)trasa.peek()).getWartosc()-1.5)
+                {
+                    trasa.add(sprawdzane);
+                    break;
+                }
+                if (sprawdzane.getWartosc()==((Pole)trasa.peek()).getWartosc()-1)
+                {
+                    trasa.add(sprawdzane);
+                    break;
+                }
             }
             i--;
         }
@@ -117,41 +132,27 @@ public class Droga {
     public void draw(Canvas canvas, int krok)
     {
         Paint paint = new Paint();
-
+        paint.setColor(0xff000000);
+        paint.setTextSize(20);
         bloczek = new ShapeDrawable();
 
-        for (int i=0; i<10; i++)
+        for (int i=0; i<10; i++)                                                                     //<--
         {
-            for ( int j=0; j<10; j++)
+            for ( int j=0; j<10; j++)                                                                //<--
             {
-                for (Integer k=-2; k<100;k++)
-                {
-                    if (mapa[i][j].getWartosc()==k)
-                    {
-                        if (k<0)
-                        {
-                            canvas.drawText(k.toString(), (i * 40) + 5, ((j + 1) * 40) - 5, paint);
-                        }
-                        if (k>-1&k<10)
-                        {
-                            canvas.drawText(k.toString(), (i * 40) + 10, ((j + 1) * 40) - 5, paint);
-                        }
-                        if (k>9)
-                        {
-                            canvas.drawText(k.toString(), (i * 40), ((j + 1) * 40) - 5, paint);
-                        }
-                    }
-                }
+                    Double k = mapa[i][j].getWartosc();
+                   canvas.drawText(k.toString(), (i * 40), ((j + 1) * 40) - 5, paint);               //<--
+
             }
         }
 
         bloczek.getPaint().setColor(0x600000ff);
-        bloczek.setBounds(poczatek.getX() * 40, poczatek.getY() * 40,
-                (poczatek.getX() + 1) * 40, (poczatek.getY() + 1) * 40);
+        bloczek.setBounds(poczatek.getX() * 40, poczatek.getY() * 40,                                //<--
+                (poczatek.getX() + 1) * 40, (poczatek.getY() + 1) * 40);                             //<--
         bloczek.draw(canvas);
         bloczek.getPaint().setColor(0x6000ff00);
-        bloczek.setBounds(koniec.getX() * 40, koniec.getY() * 40,
-                (koniec.getX() + 1) * 40, (koniec.getY() + 1) * 40);
+        bloczek.setBounds(koniec.getX() * 40, koniec.getY() * 40,                                    //<--
+                (koniec.getX() + 1) * 40, (koniec.getY() + 1) * 40);                                 //<--
         bloczek.draw(canvas);
 
         bloczek.getPaint().setColor(0x60ff0000);
@@ -164,7 +165,7 @@ public class Droga {
             Pole next = (Pole)iterator.next();
             if (tmpkrok>0)
             {
-                bloczek.setBounds(next.getX()*40, next.getY() * 40,(next.getX()+1)*40,(next.getY()+1)*40);
+                bloczek.setBounds(next.getX()*40, next.getY() * 40,(next.getX()+1)*40,(next.getY()+1)*40);   //<--
                 bloczek.draw(canvas);
             }
             tmpkrok--;

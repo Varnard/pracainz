@@ -18,13 +18,15 @@ public class Mapa {
 
     private Context context;
 
-    private boolean[][] krawedzie = new boolean[10][10];
+    private boolean[][] krawedzie;
 
-    private boolean[] test = new boolean[200];
+    private boolean[] test;
 
     public Mapa (Context context)
     {
         this.context=context;
+        krawedzie = new boolean[10][10];                                                            //<--
+        test = new boolean[200];                                                                    //<--
         zaladujMape();
         bloczek = new ShapeDrawable();
     }
@@ -36,13 +38,13 @@ public class Mapa {
 
     public void draw(Canvas canvas)
     {
-        for (int i=0; i<10; i++)
+        for (int i=0; i<10; i++)                                                                     //<--
         {
-            for ( int j=0; j<10; j++)
+            for ( int j=0; j<10; j++)                                                                //<--
             {
                 if (krawedzie[i][j]==false) bloczek.getPaint().setColor(0xffffffff);
                 if (krawedzie[i][j]==true) bloczek.getPaint().setColor(0xff565789);
-                bloczek.setBounds(i* 40, j * 40, (i+1)*40, (j+1)*40);
+                bloczek.setBounds(i* 40, j * 40, (i+1)*40, (j+1)*40);                                //<--
                 bloczek.draw(canvas);
             }
         }
@@ -50,7 +52,7 @@ public class Mapa {
 
     private void zaladujMape()
     {
-        InputStream is = context.getResources().openRawResource(R.raw.mapa2);
+        InputStream is = context.getResources().openRawResource(R.raw.mapa);
 
         BufferedInputStream buf = new BufferedInputStream(is);
 
@@ -76,9 +78,9 @@ public class Mapa {
             }
         }
         int k=0;
-        for (int i=0; i<10; i++)
+        for (int i=0; i<10; i++)                                                                     //<--
         {
-            for (int j=0;j<10;j++)
+            for (int j=0;j<10;j++)                                                                   //<--
             {
                 krawedzie[j][i]=(test[k]);
                 k++;

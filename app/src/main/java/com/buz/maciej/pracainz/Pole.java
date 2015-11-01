@@ -7,18 +7,18 @@ public class Pole {
 
     private int x;
     private int y;
-    private int wartosc;
+    private double wartosc;
 
     Pole(){};
 
-    Pole(int x, int y, int wartosc)
+    Pole(int x, int y, double wartosc)
     {
         this.x=x;
         this.y=y;
         this.wartosc=wartosc;
     }
 
-    public void setWartosc(int wartosc) {
+    public void setWartosc(double wartosc) {
         this.wartosc = wartosc;
     }
 
@@ -30,7 +30,7 @@ public class Pole {
         return y;
     }
 
-    public int getWartosc() {
+    public double getWartosc() {
         return wartosc;
     }
 }
