@@ -25,11 +25,11 @@ public class WizView extends View {
     Pole poczatek0 = new Pole(1,1,0);
     Pole koniec0 = new Pole(2,2,-1);
     Droga Trasa0;
-    Pole poczatek = new Pole(2,2,0);
-    Pole koniec = new Pole(7,7,-1);
+    Pole poczatek = new Pole(2,16,0);
+    Pole koniec = new Pole(17,2,-1);
     Droga Trasa;
-    Pole poczatek2 = new Pole(5,5,0);
-    Pole koniec2 = new Pole(1,5,-1);
+    Pole poczatek2 = new Pole(3,2,0);
+    Pole koniec2 = new Pole(15,18,-1);
     Droga Trasa2;
     int Tcase;
 
@@ -39,30 +39,30 @@ public class WizView extends View {
     public WizView(Context context)
     {
         super(context);
-        mapa = new Mapa(context);
-        Trasa0 = new Droga(1,poczatek0,koniec0,mapa.getKrawedzie());
-        Trasa = new Droga(1,poczatek,koniec,mapa.getKrawedzie());
-        Trasa2 = new Droga(1,poczatek2,koniec2,mapa.getKrawedzie());
+        mapa = new Mapa(context,2);
+        Trasa0 = new Droga(poczatek0,koniec0,mapa);
+        Trasa = new Droga(poczatek,koniec,mapa);
+        Trasa2 = new Droga(poczatek2,koniec2,mapa);
 
     }
 
     public WizView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        mapa = new Mapa(context);
-        Trasa0 = new Droga(1,poczatek0,koniec0,mapa.getKrawedzie());
-        Trasa = new Droga(1,poczatek,koniec,mapa.getKrawedzie());
-        Trasa2 = new Droga(1,poczatek2,koniec2,mapa.getKrawedzie());
+        mapa = new Mapa(context,2);
+        Trasa0 = new Droga(poczatek0,koniec0,mapa);
+        Trasa = new Droga(poczatek,koniec,mapa);
+        Trasa2 = new Droga(poczatek2,koniec2,mapa);
 
     }
 
     public WizView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
-        mapa = new Mapa(context);
-        Trasa0 = new Droga(1,poczatek0,koniec0,mapa.getKrawedzie());
-        Trasa = new Droga(1,poczatek,koniec,mapa.getKrawedzie());
-        Trasa2 = new Droga(1,poczatek2,koniec2,mapa.getKrawedzie());
+        mapa = new Mapa(context,2);
+        Trasa0 = new Droga(poczatek0,koniec0,mapa);
+        Trasa = new Droga(poczatek,koniec,mapa);
+        Trasa2 = new Droga(poczatek2,koniec2,mapa);
 
     }
 
