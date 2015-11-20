@@ -17,22 +17,21 @@ public class Droga {
 
     private LinkedList kolejka = new LinkedList();
     private Stack trasa = new Stack();
-
-    int krok;
     private ShapeDrawable bloczek;
 
     Pole[][] mapa;
     Pole poczatek;
     Pole koniec;
     int rozmiar;
-    Boolean obliczona;
 
     Droga(Pole poczatek, Pole koniec, Mapa map)
     {
         rozmiar=map.getRozmiar();
         mapa = new Pole[rozmiar][rozmiar];
         this.poczatek = poczatek;
+        this.poczatek.setWartosc(0);
         this.koniec = koniec;
+        this.koniec.setWartosc(-1);
 
 
         for (int i=0; i<rozmiar;i++)
@@ -43,7 +42,6 @@ public class Droga {
                 if (map.getKrawedzie()[i][j]==false) mapa[i][j]= new Pole(i,j,-1);
             }
         }
-        obliczona=false;
     }
 
     public void obliczTrase()
@@ -105,7 +103,6 @@ public class Droga {
             i--;
         }
 
-    obliczona=true;
     }
 
     public Stack zwrocTrase()
@@ -113,10 +110,6 @@ public class Droga {
         return trasa;
     }
 
-    public void bladTrasy()
-    {
-        obliczona=false;
-    }
 
     public Pole zwrocNastepnePole()
     {
@@ -129,14 +122,15 @@ public class Droga {
      trasa.pop();
     }
 
-    public void draw(Canvas canvas, int krok)
+    public void draw(Canvas canvas)
     {
         int wb = canvas.getHeight()/rozmiar;                                                                           //oblicza wielkosc pojedynczego bloczka do rysowania
-
+        bloczek = new ShapeDrawable();
+        /*
         Paint paint = new Paint();
         paint.setColor(0xff000000);
         paint.setTextSize(wb/2);
-        bloczek = new ShapeDrawable();
+
 
         for (int i=0; i<rozmiar; i++)
         {
@@ -146,31 +140,16 @@ public class Droga {
                    canvas.drawText(k.toString(), (i * wb), ((j + 1) * wb) - 5, paint);
 
             }
-        }
+        }*/
 
-        bloczek.getPaint().setColor(0x600000ff);
-        bloczek.setBounds(poczatek.getX() * wb, poczatek.getY() * wb,
-                (poczatek.getX() + 1) * wb, (poczatek.getY() + 1) * wb);
-        bloczek.draw(canvas);
-        bloczek.getPaint().setColor(0x6000ff00);
-        bloczek.setBounds(koniec.getX() * wb, koniec.getY() * wb,
-                (koniec.getX() + 1) * wb, (koniec.getY() + 1) * wb);
-        bloczek.draw(canvas);
-
-        bloczek.getPaint().setColor(0x60ff0000);
-        //Stack sciezka=Trasa.zwrocTrase();
+        bloczek.getPaint().setColor(0xA0ff0000);
         Iterator iterator = trasa.iterator();
 
-        int tmpkrok = krok;
         while (iterator.hasNext())
         {
             Pole next = (Pole)iterator.next();
-            if (tmpkrok>0)
-            {
                 bloczek.setBounds(next.getX()*wb, next.getY() * wb,(next.getX()+1)*wb,(next.getY()+1)*wb);   //<--
                 bloczek.draw(canvas);
-            }
-            tmpkrok--;
         }
 
     }

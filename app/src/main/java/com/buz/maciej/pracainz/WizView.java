@@ -22,11 +22,7 @@ public class WizView extends View {
 
     private WatekGlowny watek;
 
-
     int Tcase;
-
-    int krok=0;
-
 
     public WizView(Context context)
     {
@@ -62,25 +58,13 @@ public class WizView extends View {
 
         watek.mapa.draw(canvas);
 
-        if (Tcase==0)watek.Trasa0.draw(canvas, krok);
-        if (Tcase==1)watek.Trasa.draw(canvas, krok);
-        if (Tcase==2)watek.Trasa2.draw(canvas, krok);
+        if (Tcase==0)watek.Trasa0.draw(canvas);
+        if (Tcase==1)watek.zad1.draw(canvas);
+        if (Tcase==2)watek.Trasa2.draw(canvas);
         
 
         invalidate();
     }
-
-    public void wyznaczTrase1()
-    {
-        watek.Trasa.obliczTrase();
-    }               //zle miejsce
-
-      void wyznaczTrase2()
-    {
-        watek.Trasa2.obliczTrase();
-    }                   //zle miejsce
-
-
 
 }
 

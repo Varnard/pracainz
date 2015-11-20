@@ -9,7 +9,18 @@ public class Pole {
     private int y;
     private double wartosc;
 
-    Pole(){};
+    Pole(){
+        this.x=0;
+        this.y=0;
+        this.wartosc=0;
+    }
+
+    Pole(int x, int y)
+    {
+        this.x=x;
+        this.y=y;
+        this.wartosc=0;
+    }
 
     Pole(int x, int y, double wartosc)
     {

@@ -51,22 +51,17 @@ public class SystemActivity extends ActionBarActivity {
     public void mCase1(View view)
     {
         WizView wizView = (WizView)findViewById(R.id.WizView);
-        wizView.wyznaczTrase1();
         wizView.Tcase=1;
-        wizView.krok=0;
     }
 
     public void mCase2(View view)
     {
         WizView wizView = (WizView)findViewById(R.id.WizView);
-        wizView.wyznaczTrase2();
         wizView.Tcase=2;
-        wizView.krok=0;
     }
 
     public void mKrok(View view)
     {
         WizView wizView = (WizView)findViewById(R.id.WizView);
-        wizView.krok++;
     }
 }
