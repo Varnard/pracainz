@@ -22,8 +22,6 @@ public class WizView extends View {
 
     private WatekGlowny watek;
 
-    int Tcase;
-
     public WizView(Context context)
     {
         super(context);
@@ -56,13 +54,7 @@ public class WizView extends View {
     {
         super.onDraw(canvas);
 
-        watek.mapa.draw(canvas);
-
-        if (Tcase==0)watek.Trasa0.draw(canvas);
-        if (Tcase==1)watek.zad1.draw(canvas);
-        if (Tcase==2)watek.Trasa2.draw(canvas);
-        
-
+        watek.draw(canvas);
         invalidate();
     }
 

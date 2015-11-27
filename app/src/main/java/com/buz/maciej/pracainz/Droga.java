@@ -1,7 +1,6 @@
 package com.buz.maciej.pracainz;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 
 import java.util.Iterator;
@@ -17,29 +16,24 @@ public class Droga {
 
     private LinkedList kolejka = new LinkedList();
     private Stack trasa = new Stack();
-    private ShapeDrawable bloczek;
 
     Pole[][] mapa;
-    Pole poczatek;
-    Pole koniec;
+    Wspolrzedne poczatek;
+    Wspolrzedne koniec;
     int rozmiar;
 
-    Droga(Pole poczatek, Pole koniec, Mapa map)
+    Droga(Wspolrzedne poczatek, Wspolrzedne koniec, Mapa mapa)
     {
-        rozmiar=map.getRozmiar();
-        mapa = new Pole[rozmiar][rozmiar];
+        rozmiar=mapa.getRozmiar();
+        this.mapa = new Pole[rozmiar][rozmiar];
         this.poczatek = poczatek;
-        this.poczatek.setWartosc(0);
         this.koniec = koniec;
-        this.koniec.setWartosc(-1);
-
-
         for (int i=0; i<rozmiar;i++)
         {
             for (int j=0; j<rozmiar; j++)
             {
-                if (map.getKrawedzie()[i][j]==true) mapa[i][j]= new Pole(i,j,-2);
-                if (map.getKrawedzie()[i][j]==false) mapa[i][j]= new Pole(i,j,-1);
+                if (mapa.getKrawedzie()[i][j]==true) this.mapa[i][j]= new Pole(i,j,-2);
+                if (mapa.getKrawedzie()[i][j]==false) this.mapa[i][j]= new Pole(i,j,-1);
             }
         }
     }
@@ -48,7 +42,7 @@ public class Droga {
     {
         Pole aktualne;
 
-        kolejka.add(poczatek);
+        kolejka.add(new Pole(poczatek.getX(),poczatek.getY(),0));
         try {
             while (kolejka.isEmpty() == false) {
                aktualne = (Pole) kolejka.remove();
@@ -110,27 +104,24 @@ public class Droga {
         return trasa;
     }
 
-
-    public Pole zwrocNastepnePole()
+    public synchronized Pole zwrocNastepnePole()
     {
-     return (Pole)trasa.peek();
+        return (Pole)trasa.peek();
     }
 
-
-    public void poleWykonane()
+    public synchronized void poleWykonane()
     {
      trasa.pop();
     }
 
-    public void draw(Canvas canvas)
+    public synchronized void draw(Canvas canvas)
     {
-        int wb = canvas.getHeight()/rozmiar;                                                                           //oblicza wielkosc pojedynczego bloczka do rysowania
-        bloczek = new ShapeDrawable();
+        int wb = canvas.getHeight()/rozmiar;                     //oblicza wielkosc pojedynczego bloczka do rysowania
+        ShapeDrawable bloczek = new ShapeDrawable();
         /*
         Paint paint = new Paint();
         paint.setColor(0xff000000);
         paint.setTextSize(wb/2);
-
 
         for (int i=0; i<rozmiar; i++)
         {
@@ -138,7 +129,6 @@ public class Droga {
             {
                     Double k = mapa[i][j].getWartosc();
                    canvas.drawText(k.toString(), (i * wb), ((j + 1) * wb) - 5, paint);
-
             }
         }*/
 
@@ -148,7 +138,8 @@ public class Droga {
         while (iterator.hasNext())
         {
             Pole next = (Pole)iterator.next();
-                bloczek.setBounds(next.getX()*wb, next.getY() * wb,(next.getX()+1)*wb,(next.getY()+1)*wb);   //<--
+                bloczek.setBounds(next.getX()*wb, next.getY() * wb,
+                                 (next.getX()+1)*wb,(next.getY()+1)*wb);
                 bloczek.draw(canvas);
         }
 
