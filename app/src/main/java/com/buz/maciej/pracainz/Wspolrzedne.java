@@ -7,7 +7,7 @@ public class Wspolrzedne {
     private int x;
     private int y;
 
-    Wspolrzedne(){
+    public Wspolrzedne(){
         this.x=0;
         this.y=0;
     }

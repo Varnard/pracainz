@@ -14,10 +14,28 @@ public class Robot {
 
     private Wspolrzedne nastepnaPozycja;
     private Wspolrzedne obecnaPozycja;
+    private Zadanie aktualneZadanie;
+
+    Robot(Wspolrzedne obecnaPozycja)
+    {
+        this.obecnaPozycja = obecnaPozycja;
+        aktualneZadanie = new Zadanie();
+    }
+
+    public void noweZadanie(Zlecenie zlecenie,Mapa mapa)
+    {
+        aktualneZadanie = new Zadanie(obecnaPozycja,zlecenie.getKoniec(),zlecenie.getCel(),mapa);
+    }
 
     public void setNastepnaPozycja(Wspolrzedne nastepnaPozycja)
     {
         this.nastepnaPozycja = nastepnaPozycja;
+    }
+
+    public boolean isReady()
+    {
+        if (aktualneZadanie.isWykonane()) return true;
+        else return false;
     }
 
     public Wspolrzedne getnastepnaPozycja()
@@ -35,28 +53,13 @@ public class Robot {
         obecnaPozycja=nastepnaPozycja;
     }
 
-    public void czekaj()
+     public void wykonujZadanie()
     {
-
-    }
-
-    public void zaladuj()
-    {
-
-    }
-
-    public void rozladuj ()
-    {
-
-    }
-
-     public void wykonujZadanie(Zadanie zadanie)
-    {
-        if (!zadanie.isWykonane())
+        if (!aktualneZadanie.isWykonane())
         {
-            setNastepnaPozycja(zadanie.getNastepnaPozycja());
+            setNastepnaPozycja(aktualneZadanie.getNastepnaPozycja());
             wykonajKrok();
-            zadanie.krokWykonany();
+            aktualneZadanie.krokWykonany();
         }
     }
 
@@ -64,6 +67,7 @@ public class Robot {
     {
         int wb = canvas.getHeight()/rozmiarMapy;
 
+        aktualneZadanie.draw(canvas,rozmiarMapy);
         // Paint paint = new Paint();
        // paint.setColor(0xf0ff00ff);u
         ShapeDrawable bloczek = new ShapeDrawable();

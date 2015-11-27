@@ -14,7 +14,6 @@ import java.util.Stack;
  */
 public class Droga {
 
-    private LinkedList kolejka = new LinkedList();
     private Stack trasa = new Stack();
 
     Pole[][] mapa;
@@ -40,6 +39,7 @@ public class Droga {
 
     public void obliczTrase()
     {
+        LinkedList kolejka = new LinkedList();
         Pole aktualne;
 
         kolejka.add(new Pole(poczatek.getX(),poczatek.getY(),0));

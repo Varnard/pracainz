@@ -18,6 +18,11 @@ public class Zadanie {
     private boolean pobieranie;
     private boolean odkladanie;
 
+    Zadanie()
+    {
+        wykonane=true;
+    }
+
     Zadanie(Wspolrzedne poczatek, Wspolrzedne koniec, Wspolrzedne cel, Mapa mapa)
     {
         this.poczatek=poczatek;
@@ -26,7 +31,7 @@ public class Zadanie {
         trasa1 = new Droga(poczatek,cel,mapa);
         trasa2 = new Droga(cel,koniec,mapa);
         wykonane=false;
-        pobieranie=false;
+        pobieranie=true;
         odkladanie=false;
         trasa1.obliczTrase();
         trasa2.obliczTrase();
@@ -85,15 +90,15 @@ public class Zadanie {
 
     public void draw(Canvas canvas,int rozmiarMapy)
     {
-        int wb = canvas.getHeight()/rozmiarMapy;
-
-        ShapeDrawable bloczek = new ShapeDrawable();
-
-        trasa1.draw(canvas);
-        trasa2.draw(canvas);
-
         if (!wykonane)
         {
+            int wb = canvas.getHeight()/rozmiarMapy;
+
+            ShapeDrawable bloczek = new ShapeDrawable();
+
+            trasa1.draw(canvas);
+            trasa2.draw(canvas);
+
             if (pobieranie)
             {
                 bloczek.getPaint().setColor(0xA00000ff);
@@ -118,7 +123,7 @@ public class Zadanie {
                 canvas.drawText("1",(poczatek.getX() * wb) + 5, ((poczatek.getY() + 1) * wb) - 5, paint);
             }
             canvas.drawText("2", (cel.getX() * wb) + 5, ((cel.getY() + 1) * wb) - 5, paint);
-            canvas.drawText("3", (koniec.getX() * wb)+5, ((koniec.getY() + 1) * wb) - 5, paint);
+            canvas.drawText("3", (koniec.getX() * wb) + 5, ((koniec.getY() + 1) * wb) - 5, paint);
 
         }
     }
