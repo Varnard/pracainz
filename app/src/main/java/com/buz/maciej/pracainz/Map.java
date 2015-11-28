@@ -12,53 +12,53 @@ import java.io.InputStream;
  * klasa obsługująca mape
  * Created by Varn on 2015-10-19.
  */
-public class Mapa {
+public class Map {
 
-    ShapeDrawable bloczek;
+    ShapeDrawable drawingBlock;
 
     private Context context;
 
-    private int rozmiar;
+    private int size;
 
-    private boolean[][] krawedzie;
+    private boolean[][] edges;
 
-    private boolean[] test;
+    private boolean[] buffer;
 
-    public Mapa (Context context, int wersja)
+    public Map(Context context, int version)
     {
         this.context=context;
-        if (wersja==1)rozmiar=20;
-        if (wersja==2)rozmiar=40;
-        krawedzie = new boolean[rozmiar][rozmiar];
-        test = new boolean[2*(rozmiar*rozmiar)];
-        zaladujMape(wersja);
-        bloczek = new ShapeDrawable();
+        if (version==1) size =20;
+        if (version==2) size =40;
+        edges = new boolean[size][size];
+        buffer = new boolean[2*(size * size)];
+        loadMap(version);
+        drawingBlock = new ShapeDrawable();
     }
 
-    public boolean[][] getKrawedzie()
+    public boolean[][] getEdges()
     {
-        return krawedzie;
+        return edges;
     }
 
     public void draw(Canvas canvas)
     {
-        int wb = canvas.getHeight()/rozmiar;                                                                           //oblicza wielkosc pojedynczego bloczka do rysowania
-        for (int i=0; i<rozmiar; i++)
+        int bs = canvas.getHeight()/ size;                                                                           //oblicza wielkosc pojedynczego bloczka do rysowania
+        for (int i=0; i< size; i++)
         {
-            for ( int j=0; j<rozmiar; j++)
+            for ( int j=0; j< size; j++)
             {
-                if (krawedzie[i][j]==false) bloczek.getPaint().setColor(0xffffffff);
-                if (krawedzie[i][j]==true) bloczek.getPaint().setColor(0xff565789);
-                bloczek.setBounds(i* wb, j * wb, (i+1)*wb, (j+1)*wb);
-                bloczek.draw(canvas);
+                if (edges[i][j]==false) drawingBlock.getPaint().setColor(0xffffffff);
+                if (edges[i][j]==true) drawingBlock.getPaint().setColor(0xff565789);
+                drawingBlock.setBounds(i * bs, j * bs, (i + 1) * bs, (j + 1) * bs);
+                drawingBlock.draw(canvas);
             }
         }
     }
 
-    private void zaladujMape(int ktorawersja)
+    private void loadMap(int whichVersion)
     {
 
-       if (ktorawersja==1)
+       if (whichVersion==1)
        {
            InputStream is = context.getResources().openRawResource(R.raw.mapa2);
            BufferedInputStream buf = new BufferedInputStream(is);
@@ -70,12 +70,12 @@ public class Mapa {
                    while ((tmp=buf.read()) != -1) {
                        if(tmp==48)
                        {
-                           test[i] = false;
+                           buffer[i] = false;
                            i++;
                        }
                        if(tmp==49)
                        {
-                           test[i] = true;
+                           buffer[i] = true;
                            i++;
                        }
                    }
@@ -86,7 +86,7 @@ public class Mapa {
            }
        }
 
-        if (ktorawersja==2)
+        if (whichVersion==2)
         {
             InputStream is = context.getResources().openRawResource(R.raw.mapa3);
             BufferedInputStream buf = new BufferedInputStream(is);
@@ -98,12 +98,12 @@ public class Mapa {
                     while ((tmp=buf.read()) != -1) {
                         if(tmp==48)
                         {
-                            test[i] = false;
+                            buffer[i] = false;
                             i++;
                         }
                         if(tmp==49)
                         {
-                            test[i] = true;
+                            buffer[i] = true;
                             i++;
                         }
                     }
@@ -118,18 +118,18 @@ public class Mapa {
 
 
         int k=0;
-        for (int i=0; i<rozmiar; i++)
+        for (int i=0; i< size; i++)
         {
-            for (int j=0;j<rozmiar;j++)
+            for (int j=0;j< size;j++)
             {
-                krawedzie[j][i]=(test[k]);
+                edges[j][i]=(buffer[k]);
                 k++;
             }
         }
     }
 
-    public int getRozmiar()
+    public int getSize()
     {
-        return rozmiar;
+        return size;
     }
 }

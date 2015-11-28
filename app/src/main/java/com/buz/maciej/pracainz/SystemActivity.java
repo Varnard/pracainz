@@ -61,6 +61,5 @@ public class SystemActivity extends ActionBarActivity {
     public void mKrok(View view)
     {
         WizView wizView = (WizView)findViewById(R.id.WizView);
-        wizView.invalidate();
     }
 }

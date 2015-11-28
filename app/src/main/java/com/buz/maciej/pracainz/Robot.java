@@ -1,11 +1,8 @@
 package com.buz.maciej.pracainz;
 
 import android.graphics.Canvas;
-import android.graphics.Outline;
-import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
-import android.graphics.drawable.shapes.Shape;
 
 /**
  * klasa symulujaca robota
@@ -13,75 +10,65 @@ import android.graphics.drawable.shapes.Shape;
  */
 public class Robot {
 
-    private Wspolrzedne nastepnaPozycja;
-    private Wspolrzedne obecnaPozycja;
-    private Zadanie aktualneZadanie;
+    private Coordinates nextPosition;
+    private Coordinates currentPosition;
+    private Task currentTask;
 
-    Robot(Wspolrzedne obecnaPozycja)
+    Robot(Coordinates currentPosition)
     {
-        this.obecnaPozycja = obecnaPozycja;
-        aktualneZadanie = new Zadanie();
+        this.currentPosition = currentPosition;
+        currentTask = new Task();
     }
 
-    public void noweZadanie(Zlecenie zlecenie,Mapa mapa)
+    public void newTask(Request request, Map map)
     {
-        aktualneZadanie = new Zadanie(obecnaPozycja,zlecenie.getKoniec(),zlecenie.getCel(),mapa);
+        currentTask = new Task(currentPosition,request.getEnd(),request.getGoal(),map);
     }
 
-    public void setNastepnaPozycja(Wspolrzedne nastepnaPozycja)
+    public void setNextPosition(Coordinates nextPosition)
     {
-        this.nastepnaPozycja = nastepnaPozycja;
+        this.nextPosition = nextPosition;
     }
 
     public boolean isReady()
     {
-        if (aktualneZadanie.isWykonane()) return true;
+        if (currentTask.isDone()) return true;
         else return false;
     }
 
-    public Wspolrzedne getnastepnaPozycja()
+    public synchronized void move()
     {
-        return nastepnaPozycja;
+        currentPosition = nextPosition;
     }
 
-    public Wspolrzedne getobecnaPozycja()
+     public void continueWorking()
     {
-        return obecnaPozycja;
-    }
-
-    public synchronized void wykonajKrok()
-    {
-        obecnaPozycja=nastepnaPozycja;
-    }
-
-     public void wykonujZadanie()
-    {
-        if (!aktualneZadanie.isWykonane())
+        if (!currentTask.isDone())
         {
-            setNastepnaPozycja(aktualneZadanie.getNastepnaPozycja());
-            wykonajKrok();
-            aktualneZadanie.krokWykonany();
+            setNextPosition(currentTask.getNextPosition());
+            move();
+            currentTask.stepDone();
         }
     }
 
-    public synchronized void draw(Canvas canvas, int rozmiarMapy)
+    public synchronized void draw(Canvas canvas, int mapSize)
     {
-        int wb = canvas.getHeight()/rozmiarMapy;
+        int bs = canvas.getHeight()/mapSize;
         int outlineWidth = 2;
 
-        aktualneZadanie.draw(canvas,rozmiarMapy);
+        currentTask.draw(canvas, mapSize);
 
         ShapeDrawable robot = new ShapeDrawable();
         ShapeDrawable outline = new ShapeDrawable();
 
         robot.setShape(new OvalShape());
-        robot.setBounds(obecnaPozycja.getX() * wb + outlineWidth, obecnaPozycja.getY() * wb + outlineWidth,
-                (obecnaPozycja.getX() + 1) * wb - outlineWidth, (obecnaPozycja.getY() + 1) * wb - outlineWidth);
+        robot.setBounds(currentPosition.getX() * bs + outlineWidth, currentPosition.getY() * bs + outlineWidth,
+                (currentPosition.getX() + 1) * bs - outlineWidth, (currentPosition.getY() + 1) * bs - outlineWidth);
         robot.getPaint().setColor(0xffffff00);
 
         outline.setShape(new OvalShape());
-        outline.setBounds(obecnaPozycja.getX() * wb, obecnaPozycja.getY() * wb,
-                (obecnaPozycja.getX() + 1) * wb, (obecnaPozycja.getY() + 1) * wb);
+        outline.setBounds(currentPosition.getX() * bs, currentPosition.getY() * bs,
+                (currentPosition.getX() + 1) * bs, (currentPosition.getY() + 1) * bs);
         outline.getPaint().setColor(0xff000000);
 
         outline.draw(canvas);

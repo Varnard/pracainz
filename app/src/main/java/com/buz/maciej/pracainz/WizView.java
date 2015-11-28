@@ -1,26 +1,14 @@
 package com.buz.maciej.pracainz;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.Stack;
 
 
 public class WizView extends View {
 
-    private WatekGlowny watek;
+    private SystemThread thread;
 
     public WizView(Context context)
     {
@@ -43,10 +31,10 @@ public class WizView extends View {
 
     void init(Context context)
     {
-        Mapa mapa = new Mapa(context,2);
-        watek = new WatekGlowny(mapa);
-        watek.setAktywny(true);
-        watek.start();
+        Map map = new Map(context,2);
+        thread = new SystemThread(map);
+        thread.setActive(true);
+        thread.start();
     }
 
     @Override
@@ -54,7 +42,7 @@ public class WizView extends View {
     {
         super.onDraw(canvas);
 
-        watek.draw(canvas);
+        thread.draw(canvas);
         invalidate();
     }
 

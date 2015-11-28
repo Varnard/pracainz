@@ -3,22 +3,22 @@ package com.buz.maciej.pracainz;
 /**
  * Created by Varn on 2015-11-22.
  */
-public class Wspolrzedne {
+public class Coordinates {
     private int x;
     private int y;
 
-    public Wspolrzedne(){
+    public Coordinates(){
         this.x=0;
         this.y=0;
     }
 
-    Wspolrzedne(int x, int y)
+    Coordinates(int x, int y)
     {
         this.x=x;
         this.y=y;
     }
 
-    public boolean jestRowne(Wspolrzedne wsp2)
+    public boolean jestRowne(Coordinates wsp2)
     {
         if (wsp2.getX()==this.x & wsp2.getY()==this.y)return true;
         else return false;
