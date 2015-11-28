@@ -19,10 +19,10 @@ public class WatekGlowny extends Thread{
     WatekGlowny(Mapa mapa)
     {
         this.mapa=mapa;
-        Zlecenie zlecenie1 = new Zlecenie(new Wspolrzedne(1,2),new Wspolrzedne(17,2));
-        Zlecenie zlecenie2 = new Zlecenie(new Wspolrzedne(2,16),new Wspolrzedne(1,2));
-        Zlecenie zlecenie3 = new Zlecenie(new Wspolrzedne(18,18),new Wspolrzedne(10,9));
-        Zlecenie zlecenie4 = new Zlecenie(new Wspolrzedne(5,12),new Wspolrzedne(1,1));
+        Zlecenie zlecenie1 = new Zlecenie(new Wspolrzedne(1,2),new Wspolrzedne(37,2));
+        Zlecenie zlecenie2 = new Zlecenie(new Wspolrzedne(23,23),new Wspolrzedne(2,29));
+        Zlecenie zlecenie3 = new Zlecenie(new Wspolrzedne(38,38),new Wspolrzedne(35,1));
+        Zlecenie zlecenie4 = new Zlecenie(new Wspolrzedne(1,5),new Wspolrzedne(38,18));
         rob1= new Robot(new Wspolrzedne(1, 10));
         listaZlecen.add(zlecenie1);
         listaZlecen.add(zlecenie2);
@@ -52,7 +52,7 @@ public class WatekGlowny extends Thread{
                     rob1.noweZadanie((Zlecenie)listaZlecen.pop(),mapa);
                 }
                 else rob1.wykonujZadanie();
-                sleep(200);
+                sleep(100);
             }
             catch (Exception e)
             {

@@ -2,6 +2,7 @@ package com.buz.maciej.pracainz;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -118,28 +119,17 @@ public class Droga {
     {
         int wb = canvas.getHeight()/rozmiar;                     //oblicza wielkosc pojedynczego bloczka do rysowania
         ShapeDrawable bloczek = new ShapeDrawable();
-        /*
-        Paint paint = new Paint();
-        paint.setColor(0xff000000);
-        paint.setTextSize(wb/2);
 
-        for (int i=0; i<rozmiar; i++)
-        {
-            for ( int j=0; j<rozmiar; j++)
-            {
-                    Double k = mapa[i][j].getWartosc();
-                   canvas.drawText(k.toString(), (i * wb), ((j + 1) * wb) - 5, paint);
-            }
-        }*/
+        bloczek.setShape(new OvalShape());
 
-        bloczek.getPaint().setColor(0xA0ff0000);
+        bloczek.getPaint().setColor(0xffff0000);
         Iterator iterator = trasa.iterator();
 
         while (iterator.hasNext())
         {
             Pole next = (Pole)iterator.next();
-                bloczek.setBounds(next.getX()*wb, next.getY() * wb,
-                                 (next.getX()+1)*wb,(next.getY()+1)*wb);
+                bloczek.setBounds(next.getX()*wb + (wb/4), next.getY() * wb + (wb/4),
+                                 (next.getX()+1)*wb - (wb/4),(next.getY()+1)*wb - (wb/4));
                 bloczek.draw(canvas);
         }
 

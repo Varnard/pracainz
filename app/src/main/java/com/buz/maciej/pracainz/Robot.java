@@ -1,6 +1,7 @@
 package com.buz.maciej.pracainz;
 
 import android.graphics.Canvas;
+import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -66,15 +67,27 @@ public class Robot {
     public synchronized void draw(Canvas canvas, int rozmiarMapy)
     {
         int wb = canvas.getHeight()/rozmiarMapy;
+        int outlineWidth = 2;
 
         aktualneZadanie.draw(canvas,rozmiarMapy);
-        // Paint paint = new Paint();
-       // paint.setColor(0xf0ff00ff);u
-        ShapeDrawable bloczek = new ShapeDrawable();
-        bloczek.getPaint().setColor(0xf0ffff00);
-        bloczek.setBounds(obecnaPozycja.getX()*wb, obecnaPozycja.getY()*wb,
-                         (obecnaPozycja.getX()+1)*wb,(obecnaPozycja.getY()+1)*wb);
-        bloczek.draw(canvas);
+
+        ShapeDrawable robot = new ShapeDrawable();
+        ShapeDrawable outline = new ShapeDrawable();
+
+        robot.setShape(new OvalShape());
+        robot.setBounds(obecnaPozycja.getX() * wb + outlineWidth, obecnaPozycja.getY() * wb + outlineWidth,
+                (obecnaPozycja.getX() + 1) * wb - outlineWidth, (obecnaPozycja.getY() + 1) * wb - outlineWidth);
+        robot.getPaint().setColor(0xffffff00);
+
+        outline.setShape(new OvalShape());
+        outline.setBounds(obecnaPozycja.getX() * wb, obecnaPozycja.getY() * wb,
+                (obecnaPozycja.getX() + 1) * wb, (obecnaPozycja.getY() + 1) * wb);
+        outline.getPaint().setColor(0xff000000);
+
+        outline.draw(canvas);
+        robot.draw(canvas);
+
+
 
     }
 

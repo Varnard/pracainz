@@ -93,37 +93,51 @@ public class Zadanie {
         if (!wykonane)
         {
             int wb = canvas.getHeight()/rozmiarMapy;
+            int outlineWidth=1;
 
             ShapeDrawable bloczek = new ShapeDrawable();
+            ShapeDrawable outline = new ShapeDrawable();
 
-            trasa1.draw(canvas);
-            trasa2.draw(canvas);
-
-            if (pobieranie)
-            {
-                bloczek.getPaint().setColor(0xA00000ff);
-                bloczek.setBounds(poczatek.getX() * wb, poczatek.getY() * wb,
-                        (poczatek.getX() + 1) * wb, (poczatek.getY() + 1) * wb);
-                bloczek.draw(canvas);
-            }
-            bloczek.getPaint().setColor(0xA000ff00);
-            bloczek.setBounds(koniec.getX() * wb, koniec.getY() * wb,
-                    (koniec.getX() + 1) * wb, (koniec.getY() + 1) * wb);
-            bloczek.draw(canvas);
-            bloczek.getPaint().setColor(0xA000ffff);
-            bloczek.setBounds(cel.getX() * wb, cel.getY() * wb,
-                    (cel.getX() + 1) * wb, (cel.getY() + 1) * wb);
-            bloczek.draw(canvas);
             Paint paint = new Paint();
             paint.setColor(0xff000000);
+            paint.setTextSize(wb+2);
 
-            paint.setTextSize(wb);
             if (pobieranie)
             {
-                canvas.drawText("1",(poczatek.getX() * wb) + 5, ((poczatek.getY() + 1) * wb) - 5, paint);
+                trasa1.draw(canvas);
             }
-            canvas.drawText("2", (cel.getX() * wb) + 5, ((cel.getY() + 1) * wb) - 5, paint);
-            canvas.drawText("3", (koniec.getX() * wb) + 5, ((koniec.getY() + 1) * wb) - 5, paint);
+
+            if (odkladanie)
+            {
+                trasa2.draw(canvas);
+            }
+
+            outline.getPaint().setColor(0xff000000);
+            
+            bloczek.getPaint().setColor(0xff00ffff);
+            bloczek.setBounds(cel.getX() * wb+outlineWidth, cel.getY() * wb+outlineWidth,
+                    (cel.getX() + 1) * wb-outlineWidth, (cel.getY() + 1) * wb-outlineWidth);
+            outline.setBounds(cel.getX() * wb, cel.getY() * wb,
+                    (cel.getX() + 1) * wb, (cel.getY() + 1) * wb);
+            
+            outline.draw(canvas);
+            bloczek.draw(canvas);
+            
+
+            canvas.drawText("1", (cel.getX() * wb) + 3, ((cel.getY() + 1) * wb-1), paint);
+
+            bloczek.getPaint().setColor(0xff00ff00);
+            bloczek.setBounds(koniec.getX() * wb+outlineWidth, koniec.getY() * wb+outlineWidth,
+                    (koniec.getX() + 1) * wb-outlineWidth, (koniec.getY() + 1) * wb-outlineWidth);
+            outline.setBounds(koniec.getX() * wb, koniec.getY() * wb,
+                    (koniec.getX() + 1) * wb, (koniec.getY() + 1) * wb);
+
+            outline.draw(canvas);
+            bloczek.draw(canvas);
+
+            canvas.drawText("2", (koniec.getX() * wb) + 3, ((koniec.getY() + 1) * wb-1), paint);
+
+
 
         }
     }

@@ -27,8 +27,8 @@ public class Mapa {
     public Mapa (Context context, int wersja)
     {
         this.context=context;
-        if (wersja==1)rozmiar=10;
-        if (wersja==2)rozmiar=20;
+        if (wersja==1)rozmiar=20;
+        if (wersja==2)rozmiar=40;
         krawedzie = new boolean[rozmiar][rozmiar];
         test = new boolean[2*(rozmiar*rozmiar)];
         zaladujMape(wersja);
@@ -60,7 +60,7 @@ public class Mapa {
 
        if (ktorawersja==1)
        {
-           InputStream is = context.getResources().openRawResource(R.raw.mapa);
+           InputStream is = context.getResources().openRawResource(R.raw.mapa2);
            BufferedInputStream buf = new BufferedInputStream(is);
 
            if (is != null) {
@@ -88,7 +88,7 @@ public class Mapa {
 
         if (ktorawersja==2)
         {
-            InputStream is = context.getResources().openRawResource(R.raw.mapa2);
+            InputStream is = context.getResources().openRawResource(R.raw.mapa3);
             BufferedInputStream buf = new BufferedInputStream(is);
 
             if (is != null) {
@@ -113,6 +113,8 @@ public class Mapa {
                 }
             }
         }
+
+
 
 
         int k=0;
