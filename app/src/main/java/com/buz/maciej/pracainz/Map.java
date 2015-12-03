@@ -14,8 +14,6 @@ import java.io.InputStream;
  */
 public class Map {
 
-    ShapeDrawable drawingBlock;
-
     private Context context;
 
     private int size;
@@ -32,7 +30,6 @@ public class Map {
         edges = new boolean[size][size];
         buffer = new boolean[2*(size * size)];
         loadMap(version);
-        drawingBlock = new ShapeDrawable();
     }
 
     public boolean[][] getEdges()
@@ -42,7 +39,9 @@ public class Map {
 
     public void draw(Canvas canvas)
     {
-        int bs = canvas.getHeight()/ size;                                                                           //oblicza wielkosc pojedynczego bloczka do rysowania
+        ShapeDrawable drawingBlock = new ShapeDrawable();
+
+        int bs = canvas.getHeight()/ size;                                                             //oblicza wielkosc pojedynczego bloczka do rysowania
         for (int i=0; i< size; i++)
         {
             for ( int j=0; j< size; j++)
@@ -53,7 +52,21 @@ public class Map {
                 drawingBlock.draw(canvas);
             }
         }
+
+        drawingBlock.getPaint().setColor(0xff000000);                                                  //rysowanie ramki dookola mapy
+        drawingBlock.setBounds(0, 0, canvas.getWidth()-1, bs/4);
+        drawingBlock.draw(canvas);
+        drawingBlock.setBounds(0, 0, bs/4, canvas.getHeight()-1);
+        drawingBlock.draw(canvas);
+        drawingBlock.setBounds(0,canvas.getHeight()-bs/4-1,canvas.getWidth()-1,canvas.getHeight()-1);
+        drawingBlock.draw(canvas);
+        drawingBlock.setBounds(canvas.getWidth()-bs/4-1,0,canvas.getWidth()-1,canvas.getHeight()-1);
+        drawingBlock.draw(canvas);
+
+
     }
+
+
 
     private void loadMap(int whichVersion)
     {

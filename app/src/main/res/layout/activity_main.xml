@@ -1,19 +1,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/gradient_menu"
+    tools:context=".MainActivity">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Uruchom system"
+        android:text=" Uruchom system "
         android:id="@+id/bUruchom"
         android:onClick="mUruchom"
         android:layout_above="@+id/bStatystki"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp" />
+        android:background="@drawable/button_selector"
+        android:layout_marginBottom="50dp"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -21,6 +25,7 @@
         android:text="Statystki"
         android:id="@+id/bStatystki"
         android:layout_centerVertical="true"
+        android:background="@drawable/button_selector"
         android:layout_alignLeft="@+id/bWyjscie"
         android:layout_alignStart="@+id/bWyjscie" />
 
@@ -30,16 +35,19 @@
         android:text="Wyjście"
         android:id="@+id/bWyjscie"
         android:layout_below="@+id/bStatystki"
+        android:background="@drawable/button_selector"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="System Obsługi Transportu Wewnętrznego"
+        android:gravity="center"
         android:id="@+id/tTytul"
-        android:editable="true"
+        android:editable="false"
+        android:background="@drawable/title"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
