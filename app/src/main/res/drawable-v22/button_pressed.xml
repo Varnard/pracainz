@@ -4,10 +4,10 @@
 
     <gradient
         android:startColor="#ffffff"
-        android:endColor="#ffff55"
+        android:endColor="#b3b3b3"
         android:centerX="50%"
         android:centerY="50%"
-        android:gradientRadius="20%"
+        android:gradientRadius="10%"
         android:type="radial"/>
 
     <corners
