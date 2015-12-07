@@ -65,6 +65,7 @@ public class Task {
                 deliveringPackage =true;
                 gettingPackage =false;
                 path1.fieldDone();                          //usuniecie zdublowanego pola
+
             }
         }
         return nextField;
@@ -83,7 +84,7 @@ public class Task {
         }
     }
 
-    public void draw(Canvas canvas,int rozmiarMapy)
+    public synchronized void draw(Canvas canvas,int rozmiarMapy)
     {
         if (!done)
         {
@@ -95,43 +96,42 @@ public class Task {
 
             Paint paint = new Paint();
             paint.setColor(0xff000000);
-            paint.setTextSize(wb+2);
+            paint.setTextSize(wb + 2);
 
             if (gettingPackage)
             {
                 path1.draw(canvas);
+
+                outline.getPaint().setColor(0xff000000);
+
+                bloczek.getPaint().setColor(0xff00ffff);
+                bloczek.setBounds(goal.getX() * wb + outlineWidth, goal.getY() * wb + outlineWidth,
+                        (goal.getX() + 1) * wb - outlineWidth, (goal.getY() + 1) * wb - outlineWidth);
+                outline.setBounds(goal.getX() * wb, goal.getY() * wb,
+                        (goal.getX() + 1) * wb, (goal.getY() + 1) * wb);
+
+                outline.draw(canvas);
+                bloczek.draw(canvas);
+
+                canvas.drawText("1", (goal.getX() * wb) + 3, ((goal.getY() + 1) * wb - 1), paint);
             }
 
             if (deliveringPackage)
             {
                 path2.draw(canvas);
+
+                bloczek.getPaint().setColor(0xff00ff00);
+                bloczek.setBounds(end.getX() * wb + outlineWidth, end.getY() * wb + outlineWidth,
+                        (end.getX() + 1) * wb - outlineWidth, (end.getY() + 1) * wb - outlineWidth);
+                outline.setBounds(end.getX() * wb, end.getY() * wb,
+                        (end.getX() + 1) * wb, (end.getY() + 1) * wb);
+
+                outline.draw(canvas);
+                bloczek.draw(canvas);
+
+                canvas.drawText("2", (end.getX() * wb) + 3, ((end.getY() + 1) * wb - 1), paint);
+
             }
-
-            outline.getPaint().setColor(0xff000000);
-            
-            bloczek.getPaint().setColor(0xff00ffff);
-            bloczek.setBounds(goal.getX() * wb + outlineWidth, goal.getY() * wb + outlineWidth,
-                    (goal.getX() + 1) * wb - outlineWidth, (goal.getY() + 1) * wb - outlineWidth);
-            outline.setBounds(goal.getX() * wb, goal.getY() * wb,
-                    (goal.getX() + 1) * wb, (goal.getY() + 1) * wb);
-            
-            outline.draw(canvas);
-            bloczek.draw(canvas);
-            
-
-            canvas.drawText("1", (goal.getX() * wb) + 3, ((goal.getY() + 1) * wb - 1), paint);
-
-            bloczek.getPaint().setColor(0xff00ff00);
-            bloczek.setBounds(end.getX() * wb + outlineWidth, end.getY() * wb + outlineWidth,
-                    (end.getX() + 1) * wb - outlineWidth, (end.getY() + 1) * wb - outlineWidth);
-            outline.setBounds(end.getX() * wb, end.getY() * wb,
-                    (end.getX() + 1) * wb, (end.getY() + 1) * wb);
-
-            outline.draw(canvas);
-            bloczek.draw(canvas);
-
-            canvas.drawText("2", (end.getX() * wb) + 3, ((end.getY() + 1) * wb-1), paint);
-
 
 
         }

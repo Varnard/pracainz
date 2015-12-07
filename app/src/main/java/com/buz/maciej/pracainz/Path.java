@@ -120,7 +120,7 @@ public class Path {
         drawingBlock.getPaint().setColor(0xffff0000);
         Iterator iterator = route.iterator();
 
-        while (iterator.hasNext())
+        while (iterator.hasNext())                                                                     //for each?
         {
             Field next = (Field)iterator.next();
                 drawingBlock.setBounds(next.getX() * bs + (bs / 4), next.getY() * bs + (bs / 4),

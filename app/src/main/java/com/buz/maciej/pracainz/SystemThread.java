@@ -2,6 +2,7 @@ package com.buz.maciej.pracainz;
 
 import android.graphics.Canvas;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -10,30 +11,43 @@ import java.util.LinkedList;
 public class SystemThread extends Thread{
 
     private boolean active;
+    private boolean rozruch;
 
     Map map;
-    Robot rob1;
 
     private LinkedList requestList = new LinkedList();
+    private LinkedList<Robot> robotList = new LinkedList();                                              //todo ogarnac
 
     SystemThread(Map map)
     {
         this.map = map;
-        Request request1 = new Request(new Coordinates(1,2),new Coordinates(37,2));
-        Request request2 = new Request(new Coordinates(23,23),new Coordinates(2,29));
-        Request request3 = new Request(new Coordinates(38,38),new Coordinates(35,1));
-        Request request4 = new Request(new Coordinates(1,5),new Coordinates(38,18));
-        rob1= new Robot(new Coordinates(1, 10));
-        requestList.add(request1);
-        requestList.add(request2);
-        requestList.add(request3);
-        requestList.add(request4);
+        rozruch = true;
+        robotList.add(new Robot(new Coordinates(19, 26)));
+        robotList.add(new Robot(new Coordinates(21, 26)));
+        robotList.add(new Robot(new Coordinates(19, 27)));
+        requestList.add(new Request(new Coordinates(1,2),new Coordinates(37,2)));
+        requestList.add(new Request(new Coordinates(23,23),new Coordinates(2,29)));
+        requestList.add(new Request(new Coordinates(38,38),new Coordinates(35,1)));
+        requestList.add(new Request(new Coordinates(10,5),new Coordinates(2,36)));
+        requestList.add(new Request(new Coordinates(33,34),new Coordinates(1,2)));
+        requestList.add(new Request(new Coordinates(10,38),new Coordinates(1,34)));
+        requestList.add(new Request(new Coordinates(5,1),new Coordinates(18,38)));
+        requestList.add(new Request(new Coordinates(2,24),new Coordinates(2,36)));
     }
 
     public void draw(Canvas canvas)
     {
         map.draw(canvas);
-        rob1.draw(canvas, map.getSize());
+        for (Robot iterator: robotList)
+        {
+            iterator.drawTask(canvas, map.getSize());
+        }
+
+        for (Robot iterator: robotList)
+        {
+            iterator.drawRobot(canvas, map.getSize());
+        }
+
     }
 
     public void setActive(boolean active)
@@ -43,16 +57,41 @@ public class SystemThread extends Thread{
     @Override
     public void run()
     {
+        for (Robot iterator : robotList)
+        {
+            iterator.pause();
+        }
+        if (rozruch)
+        {
+            try
+            {
+                sleep(500);
+            } catch (Exception e)                                                                           //czeka az zaladuje sie wszystko
+            {
+                e.printStackTrace();
+            }
+            rozruch=false;
+        }
         while (active)
         {
             try
             {
-                if ((!requestList.isEmpty()) & rob1.isReady())
+
+                for (Robot iterator : robotList)
                 {
-                    rob1.newTask((Request) requestList.pop(), map);
+                    if ((!requestList.isEmpty()) & iterator.isReady())
+                    {
+                        iterator.newTask((Request) requestList.pop(), map);
+                        iterator.pause();
+                    }
+                    else iterator.continueWorking();
+
+                    if (requestList.isEmpty() & iterator.isReady() & !iterator.isReturning())
+                    {
+                        iterator.returnBase(map);
+                    }
                 }
-                else rob1.continueWorking();
-                sleep(100);
+                sleep(75);
             }
             catch (Exception e)
             {

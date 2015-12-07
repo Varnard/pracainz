@@ -10,19 +10,40 @@ import android.graphics.drawable.shapes.OvalShape;
  */
 public class Robot {
 
+    private Coordinates basePosition;
     private Coordinates nextPosition;
     private Coordinates currentPosition;
+    private boolean returning;
+    private boolean waiting;
     private Task currentTask;
 
-    Robot(Coordinates currentPosition)
+    Robot(Coordinates basePosition)
     {
-        this.currentPosition = currentPosition;
+        this.basePosition=basePosition;
+        this.currentPosition = basePosition;
         currentTask = new Task();
     }
 
     public void newTask(Request request, Map map)
     {
         currentTask = new Task(currentPosition,request.getEnd(),request.getGoal(),map);
+        returning=false;
+    }
+
+    public void returnBase(Map map)
+    {
+        currentTask= new Task(currentPosition,basePosition,new Coordinates(12,29),map);
+        returning=true;
+    }
+
+    public void pause()
+    {
+        waiting=true;
+    }
+
+    public boolean isReturning()
+    {
+        return returning;
     }
 
     public void setNextPosition(Coordinates nextPosition)
@@ -43,20 +64,30 @@ public class Robot {
 
      public void continueWorking()
     {
-        if (!currentTask.isDone())
+        if (waiting)
         {
-            setNextPosition(currentTask.getNextPosition());
-            move();
-            currentTask.stepDone();
+            waiting=false;
+        }
+        else
+        {
+            if (!currentTask.isDone())
+            {
+                setNextPosition(currentTask.getNextPosition());
+                move();
+                currentTask.stepDone();
+            }
         }
     }
 
-    public synchronized void draw(Canvas canvas, int mapSize)
+    public void drawTask(Canvas canvas, int mapSize)
+    {
+        currentTask.draw(canvas, mapSize);
+    }
+
+    public synchronized void drawRobot(Canvas canvas, int mapSize)
     {
         int bs = canvas.getHeight()/mapSize;
         int outlineWidth = 2;
-
-        currentTask.draw(canvas, mapSize);
 
         ShapeDrawable robot = new ShapeDrawable();
         ShapeDrawable outline = new ShapeDrawable();
@@ -73,9 +104,11 @@ public class Robot {
 
         outline.draw(canvas);
         robot.draw(canvas);
-
-
-
+    }
+    public void draw(Canvas canvas, int mapSize)
+    {
+        currentTask.draw(canvas, mapSize);
+        drawRobot(canvas, mapSize);
     }
 
 }
