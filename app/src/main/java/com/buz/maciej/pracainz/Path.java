@@ -15,38 +15,41 @@ import java.util.Stack;
  */
 public class Path {
 
-    private Stack route = new Stack();
+    private Stack<Field> route;
 
     Field[][] map;
-    Coordinates start;
-    Coordinates end;
-    int size;
+    private Coordinates start;
+    private Coordinates end;
+    private int mapSize;
 
     Path(Coordinates start, Coordinates end, Map map)
     {
-        size = map.getSize();
-        this.map = new Field[size][size];
+        boolean[][] edges = map.getEdges();
+        mapSize = map.getSize();
+        this.map = new Field[mapSize][mapSize];
         this.start = start;
         this.end = end;
-        for (int i=0; i< size;i++)
+        for (int i=0; i< mapSize;i++)
         {
-            for (int j=0; j< size; j++)
+            for (int j=0; j< mapSize; j++)
             {
-                if (map.getEdges()[i][j]==true) this.map[i][j]= new Field(i,j,-2);
-                if (map.getEdges()[i][j]==false) this.map[i][j]= new Field(i,j,-1);
+                if (edges[i][j]==true) this.map[i][j]= new Field(i,j,-2);
+                if (edges[i][j]==false) this.map[i][j]= new Field(i,j,-1);
             }
         }
     }
 
     public void makeRoute()
     {
-        LinkedList queue = new LinkedList();
+        route = new Stack<>();
+        LinkedList<Field> queue = new LinkedList<>();
         Field temp;
+
 
         queue.add(new Field(start.getX(), start.getY(), 0));
         try {
-            while (queue.isEmpty() == false) {
-               temp = (Field) queue.remove();
+            while (!queue.isEmpty()) {
+               temp = queue.remove();
                 map[temp.getX()][temp.getY()].setValue(temp.getValue());
 
                  for (Field iterator: returnNeighboursOnSides(temp))
@@ -82,16 +85,16 @@ public class Path {
 
         while(i>0)
         {
-            for (Field iterator: returnNeighbours((Field) route.peek()))
+            for (Field iterator: returnNeighbours(route.peek()))
             {
-                if (iterator.getValue()==((Field) route.peek()).getValue()-1.5)
+                if (iterator.getValue()==(route.peek()).getValue()-1.5)
                 {
-                    route.add(iterator);
+                    route.push(iterator);
                     break;
                 }
-                if (iterator.getValue()==((Field) route.peek()).getValue()-1)
+                if (iterator.getValue()==(route.peek()).getValue()-1)
                 {
-                    route.add(iterator);
+                    route.push(iterator);
                     break;
                 }
             }
@@ -100,19 +103,25 @@ public class Path {
 
     }
 
-    public synchronized Field getNextPosition()
+    public synchronized void passObstacle(Coordinates obstacle)
     {
-        return (Field) route.peek();
+        map[obstacle.getX()][obstacle.getY()].setValue(-2);
+        makeRoute();
     }
 
-    public synchronized void fieldDone()
+    public synchronized Field getNextPosition()
     {
-     route.pop();
+        return route.pop();
+    }
+    public boolean isDone()
+    {
+        if (route.isEmpty()) return true;
+        else return false;
     }
 
     public synchronized void draw(Canvas canvas)
     {
-        int bs = canvas.getHeight()/ size;                     //oblicza wielkosc pojedynczego bloczka do rysowania
+        int bs = canvas.getHeight()/ mapSize;                     //oblicza wielkosc pojedynczego bloczka do rysowania
         ShapeDrawable drawingBlock = new ShapeDrawable();
 
         drawingBlock.setShape(new OvalShape());
@@ -120,7 +129,7 @@ public class Path {
         drawingBlock.getPaint().setColor(0xffff0000);
         Iterator iterator = route.iterator();
 
-        while (iterator.hasNext())                                                                     //for each?
+        while (iterator.hasNext())                                                                     //todo for each?
         {
             Field next = (Field)iterator.next();
                 drawingBlock.setBounds(next.getX() * bs + (bs / 4), next.getY() * bs + (bs / 4),
@@ -134,9 +143,9 @@ public class Path {
     {
         Field[] neighbours = new Field[8];
         Boolean c1=false, c2=false, c3=false, c4=false;
-        if (base.getX()+1< size)c1=true;
+        if (base.getX()+1< mapSize)c1=true;
         if (base.getX()>0)c2=true;
-        if (base.getY()+1< size)c3=true;
+        if (base.getY()+1< mapSize)c3=true;
         if (base.getY()>0)c4=true;
 
           if (c2 & c4)neighbours[0] = new Field(base.getX() - 1, base.getY() - 1, map[base.getX() - 1][base.getY() - 1].getValue());
@@ -162,9 +171,9 @@ public class Path {
     {
         Field[] neighbours = new Field[4];
         Boolean c1=false, c2=false, c3=false, c4=false;
-        if (base.getX()+1< size)c1=true;
+        if (base.getX()+1< mapSize)c1=true;
         if (base.getX()>0)c2=true;
-        if (base.getY()+1< size)c3=true;
+        if (base.getY()+1< mapSize)c3=true;
         if (base.getY()>0)c4=true;
 
         if (c4)neighbours[0] = new Field(base.getX(), base.getY() - 1, map[base.getX()][base.getY() - 1].getValue());
@@ -182,9 +191,9 @@ public class Path {
     {
         Field[] neighbours = new Field[4];
         Boolean c1=false, c2=false, c3=false, c4=false;
-        if (base.getX()+1< size)c1=true;
+        if (base.getX()+1< mapSize)c1=true;
         if (base.getX()>0)c2=true;
-        if (base.getY()+1< size)c3=true;
+        if (base.getY()+1< mapSize)c3=true;
         if (base.getY()>0)c4=true;
 
         if (c2 & c4)neighbours[0] = new Field(base.getX() - 1, base.getY() - 1, map[base.getX() - 1][base.getY() - 1].getValue());

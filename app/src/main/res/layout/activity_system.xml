@@ -21,10 +21,10 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Case1"
-        android:id="@+id/bcase1"
+        android:text="Slow"
+        android:id="@+id/bSlow"
         android:background="@drawable/button_selector"
-        android:onClick="mCase1"
+        android:onClick="mSlow"
         android:layout_below="@+id/WizView"
         android:layout_marginRight="5dp"
         android:layout_alignParentLeft="true"
@@ -33,25 +33,36 @@
     <Button
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text="Case2"
-        android:id="@+id/bcase2"
+        android:text="Medium"
+        android:id="@+id/bMedium"
         android:background="@drawable/button_selector"
-        android:onClick="mCase2"
+        android:onClick="mMedium"
         android:layout_below="@+id/WizView"
         android:layout_marginRight="5dp"
-        android:layout_toRightOf="@+id/bcase1"
-        android:layout_toEndOf="@+id/bcase1"/>
+        android:layout_toRightOf="@+id/bSlow"
+        android:layout_toEndOf="@+id/bSlow"/>
 
     <Button
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:text="Krok"
-        android:id="@+id/bkrok"
+        android:text="Fast"
+        android:id="@+id/bFast"
         android:background="@drawable/button_selector"
-        android:onClick="mKrok"
+        android:onClick="mFast"
         android:layout_below="@+id/WizView"
-        android:layout_toRightOf="@+id/bcase2"
-        android:layout_toEndOf="@+id/bcase2"/>
+        android:layout_toRightOf="@+id/bMedium"
+        android:layout_toEndOf="@+id/bMedium"/>
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:id="@+id/bReset"
+        android:background="@drawable/button_selector"
+        android:onClick="mReset"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

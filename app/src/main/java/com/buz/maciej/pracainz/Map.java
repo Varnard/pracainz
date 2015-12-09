@@ -22,6 +22,7 @@ public class Map {
 
     private boolean[] buffer;
 
+
     public Map(Context context, int version)
     {
         this.context=context;
@@ -65,8 +66,6 @@ public class Map {
 
 
     }
-
-
 
     private void loadMap(int whichVersion)
     {

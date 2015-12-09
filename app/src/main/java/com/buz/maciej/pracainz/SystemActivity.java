@@ -48,18 +48,27 @@ public class SystemActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void mCase1(View view)
+    public void mSlow(View view)
     {
         WizView wizView = (WizView)findViewById(R.id.WizView);
+        wizView.thread.time=10;
     }
 
-    public void mCase2(View view)
+    public void mMedium(View view)
     {
         WizView wizView = (WizView)findViewById(R.id.WizView);
+        wizView.thread.time=3;
     }
 
-    public void mKrok(View view)
+    public void mFast(View view)
     {
         WizView wizView = (WizView)findViewById(R.id.WizView);
+        wizView.thread.time=1;
+    }
+
+    public void mReset(View view)
+    {
+        WizView wizView = (WizView)findViewById(R.id.WizView);
+        wizView.thread.reset();
     }
 }

@@ -18,9 +18,9 @@ public class Coordinates {
         this.y=y;
     }
 
-    public boolean jestRowne(Coordinates wsp2)
+    public boolean equals(Coordinates coordinates2)
     {
-        if (wsp2.getX()==this.x & wsp2.getY()==this.y)return true;
+        if (coordinates2.getX()==x && coordinates2.getY()==y)return true;
         else return false;
     }
 

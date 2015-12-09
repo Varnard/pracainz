@@ -8,7 +8,7 @@ import android.view.View;
 
 public class WizView extends View {
 
-    private SystemThread thread;
+    public SystemThread thread;
 
     public WizView(Context context)
     {

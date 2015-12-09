@@ -12,11 +12,12 @@ public class SystemThread extends Thread{
 
     private boolean active;
     private boolean rozruch;
+    public int time=1;
 
-    Map map;
+    private Map map;
 
-    private LinkedList requestList = new LinkedList();
-    private LinkedList<Robot> robotList = new LinkedList();                                              //todo ogarnac
+    private LinkedList<Request> requestList = new LinkedList<>();
+    private LinkedList<Robot> robotList = new LinkedList<>();
 
     SystemThread(Map map)
     {
@@ -40,6 +41,7 @@ public class SystemThread extends Thread{
         map.draw(canvas);
         for (Robot iterator: robotList)
         {
+            iterator.drawNextPosition(canvas, map.getSize());
             iterator.drawTask(canvas, map.getSize());
         }
 
@@ -66,7 +68,7 @@ public class SystemThread extends Thread{
             try
             {
                 sleep(500);
-            } catch (Exception e)                                                                           //czeka az zaladuje sie wszystko
+            } catch (Exception e)                                                                    //czeka az zaladuje sie wszystko
             {
                 e.printStackTrace();
             }
@@ -74,24 +76,27 @@ public class SystemThread extends Thread{
         }
         while (active)
         {
+            resolveCollisions();
             try
             {
-
                 for (Robot iterator : robotList)
                 {
-                    if ((!requestList.isEmpty()) & iterator.isReady())
-                    {
-                        iterator.newTask((Request) requestList.pop(), map);
-                        iterator.pause();
-                    }
-                    else iterator.continueWorking();
+                    iterator.move();
+                    iterator.determineNextPosition();
 
-                    if (requestList.isEmpty() & iterator.isReady() & !iterator.isReturning())
+                    if (iterator.isTaskless())
                     {
-                        iterator.returnBase(map);
+                        if (requestList.isEmpty())
+                        {
+                            if (!iterator.isReturning())iterator.returnBase(map);
+                        }
+                        else {
+                            iterator.newTask(requestList.pop(),map);
+                        }
                     }
+
                 }
-                sleep(75);
+                sleep(time*75);
             }
             catch (Exception e)
             {
@@ -100,5 +105,69 @@ public class SystemThread extends Thread{
         }
 
     }
+
+    public void reset()
+    {
+        requestList = new LinkedList<>();
+        robotList = new LinkedList<>();
+
+            rozruch = true;
+            robotList.add(new Robot(new Coordinates(19, 26)));
+            robotList.add(new Robot(new Coordinates(21, 26)));
+            robotList.add(new Robot(new Coordinates(19, 27)));
+
+            requestList.add(new Request(new Coordinates(10,2),new Coordinates(20,2)));
+            requestList.add(new Request(new Coordinates(25,2),new Coordinates(1,2)));
+            requestList.add(new Request(new Coordinates(2,38),new Coordinates(38,38)));
+
+        /*
+            requestList.add(new Request(new Coordinates(1,2),new Coordinates(37,2)));
+            requestList.add(new Request(new Coordinates(23,23),new Coordinates(2,29)));
+            requestList.add(new Request(new Coordinates(38,38),new Coordinates(35,1)));
+            requestList.add(new Request(new Coordinates(10,5),new Coordinates(2,36)));
+            requestList.add(new Request(new Coordinates(33,34),new Coordinates(1,2)));
+            requestList.add(new Request(new Coordinates(10,38),new Coordinates(1,34)));
+            requestList.add(new Request(new Coordinates(5,1),new Coordinates(18,38)));
+            requestList.add(new Request(new Coordinates(2,24),new Coordinates(2,36)));*/
+
+    }
+    private void resolveCollisions()
+    {
+        LinkedList<Coordinates> occupied = new LinkedList<>();
+
+        for (Robot rIterator : robotList)
+        {
+            occupied.add(rIterator.getCurrentPosition());
+        }
+
+        for (Robot rIterator : robotList)
+        {
+            boolean collision = false;
+            for (Coordinates cIterator : occupied)
+            {
+                if (!(rIterator.getCurrentPosition().equals(rIterator.getNextPosition())) &&
+                        rIterator.getNextPosition().equals(cIterator))collision=true;
+            }
+
+            if (collision)
+            {
+                if (!rIterator.isWaiting())
+                {
+                    for (Robot rIterator2 : robotList) {
+                        if (rIterator.getNextPosition().equals(rIterator2.getCurrentPosition()) &&
+                                rIterator.getCurrentPosition().equals(rIterator2.getNextPosition())) {
+                            rIterator.passObstacle(rIterator.getNextPosition(), map);
+                            rIterator.determineNextPosition();
+                            rIterator2.pause();
+                            break;
+                        } else rIterator.pause();
+                    }
+                }
+            }
+            else occupied.add(rIterator.getNextPosition());
+        }
+    }
+
 }
+
 
