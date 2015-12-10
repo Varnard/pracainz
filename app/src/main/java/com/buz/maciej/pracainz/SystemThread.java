@@ -1,6 +1,11 @@
 package com.buz.maciej.pracainz;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.TextView;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -15,13 +20,15 @@ public class SystemThread extends Thread{
     public int time=1;
 
     private Map map;
+    private Context context;
 
     private LinkedList<Request> requestList = new LinkedList<>();
     private LinkedList<Robot> robotList = new LinkedList<>();
 
-    SystemThread(Map map)
+    SystemThread(Context context)
     {
-        this.map = map;
+        map = new Map(context,2);
+        this.context = context;
         rozruch = true;
         robotList.add(new Robot(new Coordinates(19, 26)));
         robotList.add(new Robot(new Coordinates(21, 26)));
@@ -96,7 +103,8 @@ public class SystemThread extends Thread{
                     }
 
                 }
-                sleep(time*75);
+                updateInfo();
+                sleep(time * 75);
             }
             catch (Exception e)
             {
@@ -108,17 +116,18 @@ public class SystemThread extends Thread{
 
     public void reset()
     {
+        /*
         requestList = new LinkedList<>();
         robotList = new LinkedList<>();
 
             rozruch = true;
             robotList.add(new Robot(new Coordinates(19, 26)));
             robotList.add(new Robot(new Coordinates(21, 26)));
-            robotList.add(new Robot(new Coordinates(19, 27)));
+            robotList.add(new Robot(new Coordinates(19, 27)));*/
 
-            requestList.add(new Request(new Coordinates(10,2),new Coordinates(20,2)));
+            requestList.add(new Request(new Coordinates(10, 2), new Coordinates(20, 2)));
             requestList.add(new Request(new Coordinates(25,2),new Coordinates(1,2)));
-            requestList.add(new Request(new Coordinates(2,38),new Coordinates(38,38)));
+            requestList.add(new Request(new Coordinates(2, 38), new Coordinates(38, 38)));
 
         /*
             requestList.add(new Request(new Coordinates(1,2),new Coordinates(37,2)));
@@ -131,6 +140,56 @@ public class SystemThread extends Thread{
             requestList.add(new Request(new Coordinates(2,24),new Coordinates(2,36)));*/
 
     }
+
+    private void updateInfo()
+    {
+        Handler sendToUI = new Handler(Looper.getMainLooper());
+        sendToUI.post(new Runnable() {
+            public void run()
+            {
+                Iterator iterator = robotList.iterator();
+
+                Robot robot= (Robot)iterator.next();
+                TextView textView = (TextView) ((Activity)context).findViewById(R.id.textViewID1);
+                textView.setText(robot.getID().toString());
+                textView = (TextView) ((Activity)context).findViewById(R.id.textViewStatus1);
+                textView.setText(robot.getStatus());
+
+                int i=0;
+
+                for (int j=0;j<4;j++)
+                {
+                    if (iterator.hasNext())
+                    {
+                        robot=(Robot)iterator.next();
+                        i++;
+                    }
+
+                    switch (i)
+                    {
+                        case 1:
+                        {
+                            textView = (TextView) ((Activity) context).findViewById(R.id.textViewID2);
+                            textView.setText(robot.getID().toString());
+                            textView = (TextView) ((Activity) context).findViewById(R.id.textViewStatus2);
+                            textView.setText(robot.getStatus());
+                            break;
+                        }
+
+                        case 2:
+                        {
+                            textView = (TextView) ((Activity) context).findViewById(R.id.textViewID3);
+                            textView.setText(robot.getID().toString());
+                            textView = (TextView) ((Activity) context).findViewById(R.id.textViewStatus3);
+                            textView.setText(robot.getStatus());
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     private void resolveCollisions()
     {
         LinkedList<Coordinates> occupied = new LinkedList<>();

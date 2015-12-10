@@ -21,48 +21,167 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Slow"
-        android:id="@+id/bSlow"
-        android:background="@drawable/button_selector"
-        android:onClick="mSlow"
-        android:layout_below="@+id/WizView"
-        android:layout_marginRight="5dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <Button
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:text="Medium"
-        android:id="@+id/bMedium"
-        android:background="@drawable/button_selector"
-        android:onClick="mMedium"
-        android:layout_below="@+id/WizView"
-        android:layout_marginRight="5dp"
-        android:layout_toRightOf="@+id/bSlow"
-        android:layout_toEndOf="@+id/bSlow"/>
-
-    <Button
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
         android:text="Fast"
         android:id="@+id/bFast"
         android:background="@drawable/button_selector"
         android:onClick="mFast"
         android:layout_below="@+id/WizView"
-        android:layout_toRightOf="@+id/bMedium"
-        android:layout_toEndOf="@+id/bMedium"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
 
     <Button
-        android:layout_width="120dp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Medium"
+        android:id="@+id/bMedium"
+        android:background="@drawable/button_selector"
+        android:onClick="mMedium"
+        android:layout_below="@+id/bFast"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Slow"
+        android:id="@+id/bSlow"
+        android:background="@drawable/button_selector"
+        android:onClick="mSlow"
+        android:layout_below="@+id/bMedium"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:text="Reset"
         android:id="@+id/bReset"
         android:background="@drawable/button_selector"
         android:onClick="mReset"
-        android:layout_marginBottom="40dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_toLeftOf="@+id/bSlow"
+        android:layout_toStartOf="@+id/bSlow" />
+
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/WizView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/table"
+        android:padding="2dp">
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="ID"
+                android:id="@+id/textViewID"
+                android:background="@drawable/table_cell"
+                android:layout_column="0"
+                android:padding="3dp" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Status"
+                android:id="@+id/textViewStatus"
+                android:background="@drawable/table_cell"
+                android:layout_column="1"
+                android:padding="3dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text=""
+                android:id="@+id/textViewID1"
+                android:background="@drawable/table_cell"
+                android:layout_column="0"
+                android:padding="3dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text=""
+                android:id="@+id/textViewStatus1"
+                android:background="@drawable/table_cell"
+                android:layout_column="1"
+                android:padding="3dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text=""
+                android:id="@+id/textViewID2"
+                android:background="@drawable/table_cell"
+                android:layout_column="0"
+                android:padding="3dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text=""
+                android:id="@+id/textViewStatus2"
+                android:background="@drawable/table_cell"
+                android:layout_column="1"
+                android:padding="3dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text=""
+                android:id="@+id/textViewID3"
+                android:background="@drawable/table_cell"
+                android:layout_column="0"
+                android:padding="3dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text=""
+                android:id="@+id/textViewStatus3"
+                android:background="@drawable/table_cell"
+                android:layout_column="1"
+                android:padding="3dp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </TableRow>
+    </TableLayout>
 
 
 </RelativeLayout>

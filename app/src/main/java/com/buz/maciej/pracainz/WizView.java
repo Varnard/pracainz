@@ -31,8 +31,7 @@ public class WizView extends View {
 
     void init(Context context)
     {
-        Map map = new Map(context,2);
-        thread = new SystemThread(map);
+        thread = new SystemThread(context);
         thread.setActive(true);
         thread.start();
     }

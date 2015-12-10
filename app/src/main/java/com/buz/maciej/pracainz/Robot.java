@@ -16,8 +16,10 @@ public class Robot {
     private Coordinates currentPosition;
     private boolean returning;
     private boolean waiting;
+    private boolean unloaded;
     private Task currentTask;
-    private int id;
+    private Integer id;
+    private String status;
     static int count=0;
 
 
@@ -26,6 +28,10 @@ public class Robot {
         this.basePosition = basePosition;
         this.currentPosition = basePosition;
         this.nextPosition = basePosition;
+        unloaded=true;
+        waiting=false;
+        returning=true;
+        status="idle";
         currentTask = new Task();
         count++;
         id=count;
@@ -69,6 +75,16 @@ public class Robot {
         this.nextPosition = nextPosition;
     }
 
+    public Integer getID()
+    {
+        return id;
+    }
+
+    public String getStatus()
+    {
+        return status;
+    }
+
     public Coordinates getCurrentPosition() {
         return currentPosition;
     }
@@ -80,8 +96,7 @@ public class Robot {
 
     public boolean isTaskless()
     {
-        if (currentTask.isDone()) return true;
-        else return false;
+        return (currentTask.isDone() && !waiting && unloaded);
     }
 
     public synchronized void move()
@@ -101,20 +116,30 @@ public class Robot {
             if (!currentTask.isDone())
             {
                 setNextPosition(currentTask.getNextPosition());
+                if (returning)status="returning";
+                else status="working";
             }
-            else unloading();
+            else
+            {
+                if (returning)status="idle";
+                else unloading();
+            }
 
-            if (currentTask.loadSignal())loading();
+            if (currentTask.loadSignal() && !returning)loading();
         }
     }
 
     private void loading()
     {
+        unloaded=false;
+        status="loading";
         waiting=true;
     }
 
     private void unloading()
     {
+        unloaded=true;
+        status="unloading";
         waiting=true;
     }
 
