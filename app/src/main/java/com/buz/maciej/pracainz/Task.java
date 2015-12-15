@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 
 /**
+ * Klasa obsługująca zadanie dla robota
  * Created by Varn on 2015-11-08.
  */
 public class Task {
@@ -101,7 +102,7 @@ public class Task {
     {
         if (!done)
         {
-            int bs = canvas.getHeight()/mapSize;
+            double bs = (double)canvas.getHeight()/mapSize;
             int outlineWidth=1;
 
             ShapeDrawable bloczek = new ShapeDrawable();
@@ -109,7 +110,7 @@ public class Task {
 
             Paint paint = new Paint();
             paint.setColor(0xff000000);
-            paint.setTextSize(bs + 2);
+            paint.setTextSize((int)bs + 2);
 
             if (!deliveringPackage)
             {
@@ -118,15 +119,15 @@ public class Task {
                 outline.getPaint().setColor(0xff000000);
 
                 bloczek.getPaint().setColor(0xff00ffff);
-                bloczek.setBounds(goal.getX() * bs + outlineWidth, goal.getY() * bs + outlineWidth,
-                        (goal.getX() + 1) * bs - outlineWidth, (goal.getY() + 1) * bs - outlineWidth);
-                outline.setBounds(goal.getX() * bs, goal.getY() * bs,
-                        (goal.getX() + 1) * bs, (goal.getY() + 1) * bs);
+                bloczek.setBounds((int)(goal.getX() * bs + outlineWidth),(int)(goal.getY() * bs + outlineWidth),
+                        (int)((goal.getX() + 1) * bs - outlineWidth),(int)((goal.getY() + 1) * bs - outlineWidth));
+                outline.setBounds((int)(goal.getX() * bs),(int)(goal.getY() * bs),
+                        (int)((goal.getX() + 1) * bs),(int)((goal.getY() + 1) * bs));
 
                 outline.draw(canvas);
                 bloczek.draw(canvas);
 
-                canvas.drawText("1", (goal.getX() * bs) + 3, ((goal.getY() + 1) * bs - 1), paint);
+                canvas.drawText("1", ((int)(goal.getX() * bs) + 3),(int)(((goal.getY() + 1) * bs - 1)), paint);
             }
 
             if (!gettingPackage)
@@ -134,15 +135,15 @@ public class Task {
                 path2.draw(canvas);
 
                 bloczek.getPaint().setColor(0xff00ff00);
-                bloczek.setBounds(end.getX() * bs + outlineWidth, end.getY() * bs + outlineWidth,
-                        (end.getX() + 1) * bs - outlineWidth, (end.getY() + 1) * bs - outlineWidth);
-                outline.setBounds(end.getX() * bs, end.getY() * bs,
-                        (end.getX() + 1) * bs, (end.getY() + 1) * bs);
+                bloczek.setBounds((int)(end.getX() * bs + outlineWidth),(int)(end.getY() * bs + outlineWidth),
+                        (int)((end.getX() + 1) * bs - outlineWidth),(int)((end.getY() + 1) * bs - outlineWidth));
+                outline.setBounds((int)(end.getX() * bs),(int)(end.getY() * bs),
+                        (int)((end.getX() + 1) * bs),(int)((end.getY() + 1) * bs));
 
                 outline.draw(canvas);
                 bloczek.draw(canvas);
 
-                canvas.drawText("2", (end.getX() * bs) + 3, ((end.getY() + 1) * bs - 1), paint);
+                canvas.drawText("2", ((int)(end.getX() * bs) + 3),(int)(((end.getY() + 1) * bs - 1)), paint);
 
             }
 

@@ -14,7 +14,7 @@ import java.io.InputStream;
  */
 public class Map {
 
-    private Context context;
+    private Context context;                                                                        //todo poprawic patrz requestmanager
 
     private int size;
 
@@ -26,8 +26,9 @@ public class Map {
     public Map(Context context, int version)
     {
         this.context=context;
-        if (version==1) size =20;
-        if (version==2) size =40;
+        if (version==1) size = 20;
+        if (version==2) size = 40;
+        if (version==3) size = 50;
         edges = new boolean[size][size];
         buffer = new boolean[2*(size * size)];
         loadMap(version);
@@ -42,26 +43,26 @@ public class Map {
     {
         ShapeDrawable drawingBlock = new ShapeDrawable();
 
-        int bs = canvas.getHeight()/ size;                                                             //oblicza wielkosc pojedynczego bloczka do rysowania
+        double bs = (double)canvas.getHeight()/size;                                                             //oblicza wielkosc pojedynczego bloczka do rysowania
         for (int i=0; i< size; i++)
         {
             for ( int j=0; j< size; j++)
             {
                 if (edges[i][j]==false) drawingBlock.getPaint().setColor(0xffffffff);
                 if (edges[i][j]==true) drawingBlock.getPaint().setColor(0xff565789);
-                drawingBlock.setBounds(i * bs, j * bs, (i + 1) * bs, (j + 1) * bs);
+                drawingBlock.setBounds((int)(i * bs),(int)(j * bs),(int)((i + 1) * bs),(int)((j + 1) * bs));
                 drawingBlock.draw(canvas);
             }
         }
 
         drawingBlock.getPaint().setColor(0xff000000);                                                  //rysowanie ramki dookola mapy
-        drawingBlock.setBounds(0, 0, canvas.getWidth()-1, bs/4);
+        drawingBlock.setBounds(0, 0, canvas.getWidth()-1, (int)(bs/4));
         drawingBlock.draw(canvas);
-        drawingBlock.setBounds(0, 0, bs/4, canvas.getHeight()-1);
+        drawingBlock.setBounds(0, 0,(int) (bs/4), canvas.getHeight()-1);
         drawingBlock.draw(canvas);
-        drawingBlock.setBounds(0,canvas.getHeight()-bs/4-1,canvas.getWidth()-1,canvas.getHeight()-1);
+        drawingBlock.setBounds(0,canvas.getHeight()-(int)(bs/4)-1,canvas.getWidth()-1,canvas.getHeight()-1);
         drawingBlock.draw(canvas);
-        drawingBlock.setBounds(canvas.getWidth()-bs/4-1,0,canvas.getWidth()-1,canvas.getHeight()-1);
+        drawingBlock.setBounds(canvas.getWidth()-(int)(bs/4)-1,0,canvas.getWidth()-1,canvas.getHeight()-1);
         drawingBlock.draw(canvas);
 
 
@@ -77,7 +78,7 @@ public class Map {
 
            if (is != null) {
                int i=0;
-               int tmp=0;
+               int tmp;
                try {
                    while ((tmp=buf.read()) != -1) {
                        if(tmp==48)
@@ -105,7 +106,7 @@ public class Map {
 
             if (is != null) {
                 int i=0;
-                int tmp=0;
+                int tmp;
                 try {
                     while ((tmp=buf.read()) != -1) {
                         if(tmp==48)
@@ -125,6 +126,32 @@ public class Map {
                 }
             }
         }
+
+        if (whichVersion==3) {
+            InputStream is = context.getResources().openRawResource(R.raw.mapa4);
+            BufferedInputStream buf = new BufferedInputStream(is);
+
+            if (is != null) {
+                int i = 0;
+                int tmp;
+                try {
+                    while ((tmp = buf.read()) != -1) {
+                        if (tmp == 48) {
+                            buffer[i] = false;
+                            i++;
+                        }
+                        if (tmp == 49) {
+                            buffer[i] = true;
+                            i++;
+                        }
+                    }
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
 
 
 

@@ -1,30 +1,35 @@
 package com.buz.maciej.pracainz;
 
-import android.content.Context;
+import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
 
 
-public class SystemActivity extends ActionBarActivity {
+public class SystemActivity extends FragmentActivity
+implements RequestDialog.RequestDialogListener{
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_system);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,6 +51,26 @@ public class SystemActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog)
+    {
+
+        EditText requestIdEditText = (EditText) dialog.getDialog().findViewById(R.id.request_id_text);
+        EditText exitIdEditText = (EditText) dialog.getDialog().findViewById(R.id.exit_id_text);
+        Integer requestId = Integer.valueOf(requestIdEditText.getText().toString());
+        Integer exitId = Integer.valueOf(exitIdEditText.getText().toString());
+        WizView wizView = (WizView)findViewById(R.id.WizView);
+        wizView.thread.addRequest(requestId,exitId);
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog)
+    {
+
     }
 
     public void mSlow(View view)
@@ -70,5 +95,12 @@ public class SystemActivity extends ActionBarActivity {
     {
         WizView wizView = (WizView)findViewById(R.id.WizView);
         wizView.thread.reset();
+    }
+
+    public void mAdd(View view)
+    {
+        FragmentManager fm = getFragmentManager();
+        RequestDialog dialogFragment = new RequestDialog ();
+        dialogFragment.show(fm, "dialog");
     }
 }

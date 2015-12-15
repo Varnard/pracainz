@@ -115,13 +115,13 @@ public class Path {
     }
     public boolean isDone()
     {
-        if (route.isEmpty()) return true;
-        else return false;
+       return route.isEmpty();
+
     }
 
     public synchronized void draw(Canvas canvas)
     {
-        int bs = canvas.getHeight()/ mapSize;                     //oblicza wielkosc pojedynczego bloczka do rysowania
+        double bs = (double)canvas.getHeight()/ mapSize;                     //oblicza wielkosc pojedynczego bloczka do rysowania
         ShapeDrawable drawingBlock = new ShapeDrawable();
 
         drawingBlock.setShape(new OvalShape());
@@ -132,8 +132,8 @@ public class Path {
         while (iterator.hasNext())                                                                     //todo for each?
         {
             Field next = (Field)iterator.next();
-                drawingBlock.setBounds(next.getX() * bs + (bs / 4), next.getY() * bs + (bs / 4),
-                        (next.getX() + 1) * bs - (bs / 4), (next.getY() + 1) * bs - (bs / 4));
+                drawingBlock.setBounds((int)(next.getX() * bs + (bs / 4)),(int)(next.getY() * bs + (bs / 4)),
+                        (int)((next.getX() + 1) * bs - (bs / 4)), (int)((next.getY() + 1) * bs - (bs / 4)));
                 drawingBlock.draw(canvas);
         }
 

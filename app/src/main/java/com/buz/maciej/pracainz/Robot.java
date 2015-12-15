@@ -150,55 +150,34 @@ public class Robot {
 
     public void drawNextPosition(Canvas canvas, int mapSize)
     {
-        int bs = canvas.getHeight() / mapSize;
+        double bs = (double)canvas.getHeight() / mapSize;
         ShapeDrawable drawingBlock = new ShapeDrawable();
 
         drawingBlock.setShape(new OvalShape());
         drawingBlock.getPaint().setColor(0xffff0000);
-        drawingBlock.setBounds(nextPosition.getX() * bs + (bs / 4), nextPosition.getY() * bs + (bs / 4),
-                (nextPosition.getX() + 1) * bs - (bs / 4), (nextPosition.getY() + 1) * bs - (bs / 4));
+        drawingBlock.setBounds((int)(nextPosition.getX() * bs + (bs / 4)),(int) (nextPosition.getY() * bs + (bs / 4)),
+                (int)((nextPosition.getX() + 1) * bs - (bs / 4)),(int) ((nextPosition.getY() + 1) * bs - (bs / 4)));
         drawingBlock.draw(canvas);
     }
 
     public synchronized void drawRobot(Canvas canvas, int mapSize)
     {
-        int bs = canvas.getHeight()/mapSize;
+        double bs = (double)canvas.getHeight()/mapSize;
         int outlineWidth = 2;
 
         ShapeDrawable robot = new ShapeDrawable();
         ShapeDrawable outline = new ShapeDrawable();
 
         robot.setShape(new OvalShape());
-        robot.setBounds(currentPosition.getX() * bs + outlineWidth, currentPosition.getY() * bs + outlineWidth,
-                (currentPosition.getX() + 1) * bs - outlineWidth, (currentPosition.getY() + 1) * bs - outlineWidth);
+        robot.setBounds((int)(currentPosition.getX() * bs + outlineWidth),(int) (currentPosition.getY() * bs + outlineWidth),
+                (int)((currentPosition.getX() + 1) * bs - outlineWidth),(int)((currentPosition.getY() + 1) * bs - outlineWidth));
 
-        robot.getPaint().setColor(0xffafff00);
-
-
-        switch (id)
-        {
-            case 1:
-            {
-                robot.getPaint().setColor(0xff00ff00);
-                break;
-            }
-            case 2:
-            {
-                robot.getPaint().setColor(0xffffff00);
-                break;
-            }
-            case 3:
-            {
-                robot.getPaint().setColor(0xff00ffff);
-                break;
-            }
-
-        }
+        robot.getPaint().setColor(0xffffaf00);
 
 
         outline.setShape(new OvalShape());
-        outline.setBounds(currentPosition.getX() * bs, currentPosition.getY() * bs,
-                (currentPosition.getX() + 1) * bs, (currentPosition.getY() + 1) * bs);
+        outline.setBounds((int)(currentPosition.getX() * bs),(int)(currentPosition.getY() * bs),
+                (int)((currentPosition.getX() + 1) * bs),(int)((currentPosition.getY() + 1) * bs));
         outline.getPaint().setColor(0xff000000);
 
         outline.draw(canvas);

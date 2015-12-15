@@ -2,12 +2,14 @@ package com.buz.maciej.pracainz;
 
 
 /**
+ * Zlecenie
  * Created by Varn on 2015-11-27.
  */
 public class Request {
 
     private Coordinates goal;
     private Coordinates end;
+    private int id=0;
 
     Request()
     {
@@ -19,6 +21,17 @@ public class Request {
     {
         this.goal = goal;
         this.end = end;
+    }
+
+    Request(Coordinates goal, Coordinates end, int id)
+    {
+        this.goal = goal;
+        this.end = end;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Coordinates getGoal() {

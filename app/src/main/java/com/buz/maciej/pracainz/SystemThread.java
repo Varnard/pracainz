@@ -11,15 +11,17 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
+ * Glowne dzialanie sytemu w osobnym watku niz UI
  * Created by Varn on 2015-11-08.
  */
 public class SystemThread extends Thread{
 
     private boolean active;
     private boolean rozruch;
-    public int time=1;
+    public int time;
 
     private Map map;
+    private RequestManager requestManager;
     private Context context;
 
     private LinkedList<Request> requestList = new LinkedList<>();
@@ -27,20 +29,27 @@ public class SystemThread extends Thread{
 
     SystemThread(Context context)
     {
-        map = new Map(context,2);
+        map = new Map(context,3);
+        requestManager = new RequestManager(context,3);
         this.context = context;
         rozruch = true;
-        robotList.add(new Robot(new Coordinates(19, 26)));
-        robotList.add(new Robot(new Coordinates(21, 26)));
-        robotList.add(new Robot(new Coordinates(19, 27)));
-        requestList.add(new Request(new Coordinates(1,2),new Coordinates(37,2)));
-        requestList.add(new Request(new Coordinates(23,23),new Coordinates(2,29)));
-        requestList.add(new Request(new Coordinates(38,38),new Coordinates(35,1)));
-        requestList.add(new Request(new Coordinates(10,5),new Coordinates(2,36)));
-        requestList.add(new Request(new Coordinates(33,34),new Coordinates(1,2)));
-        requestList.add(new Request(new Coordinates(10,38),new Coordinates(1,34)));
-        requestList.add(new Request(new Coordinates(5,1),new Coordinates(18,38)));
-        requestList.add(new Request(new Coordinates(2,24),new Coordinates(2,36)));
+        time=1;
+
+
+        robotList.add(new Robot(new Coordinates(22,26)));
+        robotList.add(new Robot(new Coordinates(22,28)));
+        robotList.add(new Robot(new Coordinates(22,30)));
+        robotList.add(new Robot(new Coordinates(27,26)));
+        robotList.add(new Robot(new Coordinates(27,28)));
+      //  robotList.add(new Robot(new Coordinates(27,30)));
+
+        requestList.add(requestManager.getRequest(5,2));
+        requestList.add(requestManager.getRequest(348,1));
+        requestList.add(requestManager.getRequest(92,3));
+        requestList.add(requestManager.getRequest(200,4));
+        requestList.add(requestManager.getRequest(648,5));
+        requestList.add(requestManager.getRequest(450,6));
+
     }
 
     public void draw(Canvas canvas)
@@ -74,8 +83,8 @@ public class SystemThread extends Thread{
         {
             try
             {
-                sleep(500);
-            } catch (Exception e)                                                                    //czeka az zaladuje sie wszystko
+                sleep(500);                                                                         //czeka az zaladuje sie wszystko
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -114,30 +123,32 @@ public class SystemThread extends Thread{
 
     }
 
+    public void addRequest(int requestId, int exitId)
+    {
+        requestList.add(requestManager.getRequest(requestId,exitId));
+    }
+
     public void reset()
     {
         /*
         requestList = new LinkedList<>();
         robotList = new LinkedList<>();
 
-            rozruch = true;
-            robotList.add(new Robot(new Coordinates(19, 26)));
-            robotList.add(new Robot(new Coordinates(21, 26)));
-            robotList.add(new Robot(new Coordinates(19, 27)));*/
+        rozruch = true;
 
-            requestList.add(new Request(new Coordinates(10, 2), new Coordinates(20, 2)));
-            requestList.add(new Request(new Coordinates(25,2),new Coordinates(1,2)));
-            requestList.add(new Request(new Coordinates(2, 38), new Coordinates(38, 38)));
+        robotList.add(new Robot(new Coordinates(22,26)));
+        robotList.add(new Robot(new Coordinates(22,28)));
+        robotList.add(new Robot(new Coordinates(22,30)));
+        robotList.add(new Robot(new Coordinates(27,26)));
+        robotList.add(new Robot(new Coordinates(27,28)));
+        robotList.add(new Robot(new Coordinates(27,30)));*/
 
-        /*
-            requestList.add(new Request(new Coordinates(1,2),new Coordinates(37,2)));
-            requestList.add(new Request(new Coordinates(23,23),new Coordinates(2,29)));
-            requestList.add(new Request(new Coordinates(38,38),new Coordinates(35,1)));
-            requestList.add(new Request(new Coordinates(10,5),new Coordinates(2,36)));
-            requestList.add(new Request(new Coordinates(33,34),new Coordinates(1,2)));
-            requestList.add(new Request(new Coordinates(10,38),new Coordinates(1,34)));
-            requestList.add(new Request(new Coordinates(5,1),new Coordinates(18,38)));
-            requestList.add(new Request(new Coordinates(2,24),new Coordinates(2,36)));*/
+        requestList.add(requestManager.getRequest(5,2));
+        requestList.add(requestManager.getRequest(348,1));
+        requestList.add(requestManager.getRequest(92,3));
+        requestList.add(requestManager.getRequest(200,4));
+        requestList.add(requestManager.getRequest(648,5));
+        requestList.add(requestManager.getRequest(450,6));
 
     }
 
@@ -181,6 +192,24 @@ public class SystemThread extends Thread{
                             textView = (TextView) ((Activity) context).findViewById(R.id.textViewID3);
                             textView.setText(robot.getID().toString());
                             textView = (TextView) ((Activity) context).findViewById(R.id.textViewStatus3);
+                            textView.setText(robot.getStatus());
+                            break;
+                        }
+
+                        case 3:
+                        {
+                            textView = (TextView) ((Activity) context).findViewById(R.id.textViewID4);
+                            textView.setText(robot.getID().toString());
+                            textView = (TextView) ((Activity) context).findViewById(R.id.textViewStatus4);
+                            textView.setText(robot.getStatus());
+                            break;
+                        }
+
+                        case 4:
+                        {
+                            textView = (TextView) ((Activity) context).findViewById(R.id.textViewID5);
+                            textView.setText(robot.getID().toString());
+                            textView = (TextView) ((Activity) context).findViewById(R.id.textViewStatus5);
                             textView.setText(robot.getStatus());
                             break;
                         }
