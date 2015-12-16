@@ -1,7 +1,6 @@
 package com.buz.maciej.pracainz;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 
@@ -20,21 +19,19 @@ public class Robot {
     private Task currentTask;
     private Integer id;
     private String status;
-    static int count=0;
 
-
-    Robot(Coordinates basePosition)
+    Robot(Coordinates basePosition, int id)
     {
         this.basePosition = basePosition;
         this.currentPosition = basePosition;
         this.nextPosition = basePosition;
+        this.id=id;
         unloaded=true;
         waiting=false;
         returning=true;
         status="idle";
         currentTask = new Task();
-        count++;
-        id=count;
+
     }
 
     public void newTask(Request request, Map map)
@@ -169,10 +166,20 @@ public class Robot {
         ShapeDrawable outline = new ShapeDrawable();
 
         robot.setShape(new OvalShape());
-        robot.setBounds((int)(currentPosition.getX() * bs + outlineWidth),(int) (currentPosition.getY() * bs + outlineWidth),
-                (int)((currentPosition.getX() + 1) * bs - outlineWidth),(int)((currentPosition.getY() + 1) * bs - outlineWidth));
+        robot.setBounds((int) (currentPosition.getX() * bs + outlineWidth), (int) (currentPosition.getY() * bs + outlineWidth),
+                (int) ((currentPosition.getX() + 1) * bs - outlineWidth), (int) ((currentPosition.getY() + 1) * bs - outlineWidth));
 
         robot.getPaint().setColor(0xffffaf00);
+
+        switch (id)
+        {
+            case 1: robot.getPaint().setColor(0xffff3333);break;
+            case 2: robot.getPaint().setColor(0xff5cd65c);break;
+            case 3: robot.getPaint().setColor(0xffffd633);break;
+            case 4: robot.getPaint().setColor(0xffff8533);break;
+            case 5: robot.getPaint().setColor(0xff33ffcc);break;
+
+        }
 
 
         outline.setShape(new OvalShape());

@@ -1,19 +1,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@drawable/title"
+    android:background="@drawable/dialog_background"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-      <EditText
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/request_dialog"
+        android:id="@+id/textView3"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/request_dialog_request_Id"
+        android:id="@+id/request_dialog_request_Id_text"
+        android:layout_margin="4dp"/>
+
+    <EditText
         android:id="@+id/request_id_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp"
-        android:hint="@string/request_dialog_requestId_hint"/>
+        android:layout_margin="4dp"
+        android:hint="@string/request_dialog_request_Id_hint"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/request_dialog_exit_Id"
+        android:id="@+id/request_dialog_exit_Id_text"
+        android:layout_margin="4dp"/>
 
     <EditText
         android:id="@+id/exit_id_text"
@@ -24,7 +48,7 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="16dp"
-        android:hint="@string/request_dialog_exitId_hint"/>
+        android:hint="@string/request_dialog_exit_Id_hint"/>
 
 
 </LinearLayout>

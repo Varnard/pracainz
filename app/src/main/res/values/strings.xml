@@ -4,8 +4,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_system">SystemActivity</string>
     <string name="request_dialog">Wprowadź zamówienie</string>
-    <string name="request_dialog_requestId_hint">1-792</string>
-    <string name="request_dialog_exitId_hint">1-6</string>
+    <string name="request_dialog_request_Id_hint">1-792</string>
+    <string name="request_dialog_exit_Id_hint">1-6</string>
+    <string name="request_dialog_request_Id">Numer zamówienia</string>
+    <string name="request_dialog_exit_Id">Numer wyjścia</string>
     <string name="request_dialog_confirm">Potwierdź</string>
     <string name="request_dialog_cancel">Anuluj</string>
 </resources>

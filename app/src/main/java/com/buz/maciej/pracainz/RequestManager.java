@@ -1,9 +1,6 @@
 package com.buz.maciej.pracainz;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.drawable.ShapeDrawable;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,53 +42,65 @@ public class RequestManager {
         return new Request(goal,end,requestId);
     }
 
-    private void loadMap(int whichVersion, Context context) {
+    private void loadMap(int whichVersion, Context context)
+    {
 
-        if (whichVersion == 3) {
-            InputStream is = context.getResources().openRawResource(R.raw.request4);
-            BufferedInputStream buf = new BufferedInputStream(is);
+        InputStream is = new InputStream()
+        {
+            @Override
+            public int read() throws IOException {
+                return 0;
+            }
+        };
 
-            if (is != null) {
-                int i = 0;
-                int column;
-                int row;
-                int rId=1;
-                int eId=-1;
-                int tmp;
-                try {
-                    while ((tmp = buf.read()) != -1) {
-                        column=i%size;
-                        row=i/size;
-                        switch (tmp)
+        BufferedInputStream buf = new BufferedInputStream(is);
+
+        if (whichVersion == 3)
+        {
+            is = context.getResources().openRawResource(R.raw.request4);
+            buf = new BufferedInputStream(is);
+        }
+
+        if (is != null) {
+            int i = 0;
+            int column;
+            int row;
+            int rId=1;
+            int eId=-1;
+            int tmp;
+            try {
+                while ((tmp = buf.read()) != -1) {
+                    column=i%size;
+                    row=i/size;
+                    switch (tmp)
+                    {
+                        case 48:
                         {
-                            case 48:
-                            {
-                                IdMap[column][row] = 0;
-                                i++;
-                                break;
-                            }
-                            case 49:
-                            {
-                                IdMap[column][row] = rId;
-                                rId++;
-                                i++;
-                                break;
-                            }
-
-                            case 50:
-                            {
-                                IdMap[column][row] = eId;
-                                eId--;
-                                i++;
-                                break;
+                            IdMap[column][row] = 0;
+                            i++;
+                            break;
+                        }
+                        case 49:
+                        {
+                            IdMap[column][row] = rId;
+                            rId++;
+                            i++;
+                            break;
                         }
 
+                        case 50:
+                        {
+                            IdMap[column][row] = eId;
+                            eId--;
+                            i++;
+                            break;
                         }
+
                     }
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

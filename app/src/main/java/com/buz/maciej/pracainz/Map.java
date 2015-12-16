@@ -14,24 +14,17 @@ import java.io.InputStream;
  */
 public class Map {
 
-    private Context context;                                                                        //todo poprawic patrz requestmanager
-
     private int size;
 
     private boolean[][] edges;
 
-    private boolean[] buffer;
-
-
     public Map(Context context, int version)
     {
-        this.context=context;
         if (version==1) size = 20;
         if (version==2) size = 40;
         if (version==3) size = 50;
         edges = new boolean[size][size];
-        buffer = new boolean[2*(size * size)];
-        loadMap(version);
+        loadMap(version, context);
     }
 
     public boolean[][] getEdges()
@@ -68,101 +61,68 @@ public class Map {
 
     }
 
-    private void loadMap(int whichVersion)
+    private void loadMap(int whichVersion, Context context)
     {
 
-       if (whichVersion==1)
-       {
-           InputStream is = context.getResources().openRawResource(R.raw.mapa2);
-           BufferedInputStream buf = new BufferedInputStream(is);
+        InputStream is = new InputStream()
+        {
+            @Override
+            public int read() throws IOException {
+                return 0;
+            }
+        };
 
-           if (is != null) {
-               int i=0;
-               int tmp;
-               try {
-                   while ((tmp=buf.read()) != -1) {
-                       if(tmp==48)
-                       {
-                           buffer[i] = false;
-                           i++;
-                       }
-                       if(tmp==49)
-                       {
-                           buffer[i] = true;
-                           i++;
-                       }
-                   }
-                   is.close();
-               } catch (IOException e) {
-                   e.printStackTrace();
-               }
-           }
-       }
+        BufferedInputStream buf = new BufferedInputStream(is);
+
+
+        if (whichVersion==1)
+        {
+           is = context.getResources().openRawResource(R.raw.mapa2);
+           buf = new BufferedInputStream(is);
+
+        }
 
         if (whichVersion==2)
         {
-            InputStream is = context.getResources().openRawResource(R.raw.mapa3);
-            BufferedInputStream buf = new BufferedInputStream(is);
-
-            if (is != null) {
-                int i=0;
-                int tmp;
-                try {
-                    while ((tmp=buf.read()) != -1) {
-                        if(tmp==48)
-                        {
-                            buffer[i] = false;
-                            i++;
-                        }
-                        if(tmp==49)
-                        {
-                            buffer[i] = true;
-                            i++;
-                        }
-                    }
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            is = context.getResources().openRawResource(R.raw.mapa3);
+            buf = new BufferedInputStream(is);
         }
 
-        if (whichVersion==3) {
-            InputStream is = context.getResources().openRawResource(R.raw.mapa4);
-            BufferedInputStream buf = new BufferedInputStream(is);
-
-            if (is != null) {
-                int i = 0;
-                int tmp;
-                try {
-                    while ((tmp = buf.read()) != -1) {
-                        if (tmp == 48) {
-                            buffer[i] = false;
-                            i++;
-                        }
-                        if (tmp == 49) {
-                            buffer[i] = true;
-                            i++;
-                        }
-                    }
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-
-
-
-
-        int k=0;
-        for (int i=0; i< size; i++)
+        if (whichVersion==3)
         {
-            for (int j=0;j< size;j++)
-            {
-                edges[j][i]=(buffer[k]);
-                k++;
+            is = context.getResources().openRawResource(R.raw.mapa4);
+            buf = new BufferedInputStream(is);
+        }
+
+        if (is != null)
+        {
+            int i = 0;
+            int column;
+            int row;
+            int tmp;
+            try {
+                while ((tmp = buf.read()) != -1) {
+                    column=i%size;
+                    row=i/size;
+                    switch (tmp)
+                    {
+                        case 48:
+                        {
+                            edges[column][row] = false;
+                            i++;
+                            break;
+                        }
+                        case 49:
+                        {
+                            edges[column][row] = true;
+                            i++;
+                            break;
+                        }
+                    }
+                }
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

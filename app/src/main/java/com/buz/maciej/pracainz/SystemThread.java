@@ -36,12 +36,12 @@ public class SystemThread extends Thread{
         time=1;
 
 
-        robotList.add(new Robot(new Coordinates(22,26)));
-        robotList.add(new Robot(new Coordinates(22,28)));
-        robotList.add(new Robot(new Coordinates(22,30)));
-        robotList.add(new Robot(new Coordinates(27,26)));
-        robotList.add(new Robot(new Coordinates(27,28)));
-      //  robotList.add(new Robot(new Coordinates(27,30)));
+        robotList.add(new Robot(new Coordinates(22,26),1));
+        robotList.add(new Robot(new Coordinates(22,28),2));
+        robotList.add(new Robot(new Coordinates(22,30),3));
+        robotList.add(new Robot(new Coordinates(27,26),4));
+        robotList.add(new Robot(new Coordinates(27,28),5));
+
 
         requestList.add(requestManager.getRequest(5,2));
         requestList.add(requestManager.getRequest(348,1));

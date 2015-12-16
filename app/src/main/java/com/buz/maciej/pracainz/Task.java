@@ -105,7 +105,7 @@ public class Task {
             double bs = (double)canvas.getHeight()/mapSize;
             int outlineWidth=1;
 
-            ShapeDrawable bloczek = new ShapeDrawable();
+            ShapeDrawable drawingBlock = new ShapeDrawable();
             ShapeDrawable outline = new ShapeDrawable();
 
             Paint paint = new Paint();
@@ -118,14 +118,14 @@ public class Task {
 
                 outline.getPaint().setColor(0xff000000);
 
-                bloczek.getPaint().setColor(0xff00ffff);
-                bloczek.setBounds((int)(goal.getX() * bs + outlineWidth),(int)(goal.getY() * bs + outlineWidth),
-                        (int)((goal.getX() + 1) * bs - outlineWidth),(int)((goal.getY() + 1) * bs - outlineWidth));
+                drawingBlock.getPaint().setColor(0xff00ffff);
+                drawingBlock.setBounds((int) (goal.getX() * bs + outlineWidth), (int) (goal.getY() * bs + outlineWidth),
+                        (int) ((goal.getX() + 1) * bs - outlineWidth), (int) ((goal.getY() + 1) * bs - outlineWidth));
                 outline.setBounds((int)(goal.getX() * bs),(int)(goal.getY() * bs),
                         (int)((goal.getX() + 1) * bs),(int)((goal.getY() + 1) * bs));
 
                 outline.draw(canvas);
-                bloczek.draw(canvas);
+                drawingBlock.draw(canvas);
 
                 canvas.drawText("1", ((int)(goal.getX() * bs) + 3),(int)(((goal.getY() + 1) * bs - 1)), paint);
             }
@@ -134,14 +134,14 @@ public class Task {
             {
                 path2.draw(canvas);
 
-                bloczek.getPaint().setColor(0xff00ff00);
-                bloczek.setBounds((int)(end.getX() * bs + outlineWidth),(int)(end.getY() * bs + outlineWidth),
-                        (int)((end.getX() + 1) * bs - outlineWidth),(int)((end.getY() + 1) * bs - outlineWidth));
+                drawingBlock.getPaint().setColor(0xff00ff00);
+                drawingBlock.setBounds((int) (end.getX() * bs + outlineWidth), (int) (end.getY() * bs + outlineWidth),
+                        (int) ((end.getX() + 1) * bs - outlineWidth), (int) ((end.getY() + 1) * bs - outlineWidth));
                 outline.setBounds((int)(end.getX() * bs),(int)(end.getY() * bs),
                         (int)((end.getX() + 1) * bs),(int)((end.getY() + 1) * bs));
 
                 outline.draw(canvas);
-                bloczek.draw(canvas);
+                drawingBlock.draw(canvas);
 
                 canvas.drawText("2", ((int)(end.getX() * bs) + 3),(int)(((end.getY() + 1) * bs - 1)), paint);
 

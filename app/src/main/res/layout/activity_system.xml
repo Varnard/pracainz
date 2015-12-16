@@ -123,7 +123,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text=""
                 android:id="@+id/textViewID1"
-                android:background="@drawable/table_cell"
+                android:background="@drawable/table_cell_id_1"
                 android:layout_column="0"
                 android:padding="3dp" />
 
@@ -148,7 +148,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text=""
                 android:id="@+id/textViewID2"
-                android:background="@drawable/table_cell"
+                android:background="@drawable/table_cell_id_2"
                 android:layout_column="0"
                 android:padding="3dp" />
 
@@ -173,7 +173,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text=""
                 android:id="@+id/textViewID3"
-                android:background="@drawable/table_cell"
+                android:background="@drawable/table_cell_id_3"
                 android:layout_column="0"
                 android:padding="3dp" />
 
@@ -199,7 +199,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text=""
                 android:id="@+id/textViewID4"
-                android:background="@drawable/table_cell"
+                android:background="@drawable/table_cell_id_4"
                 android:layout_column="0"
                 android:padding="3dp" />
 
@@ -225,7 +225,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text=""
                 android:id="@+id/textViewID5"
-                android:background="@drawable/table_cell"
+                android:background="@drawable/table_cell_id_5"
                 android:layout_column="0"
                 android:padding="3dp" />
 

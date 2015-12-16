@@ -17,12 +17,6 @@ public class Request {
         end = new Coordinates();
     }
 
-    Request(Coordinates goal, Coordinates end)
-    {
-        this.goal = goal;
-        this.end = end;
-    }
-
     Request(Coordinates goal, Coordinates end, int id)
     {
         this.goal = goal;
@@ -38,15 +32,7 @@ public class Request {
         return goal;
     }
 
-    public void setGoal(Coordinates goal) {
-        this.goal = goal;
-    }
-
     public Coordinates getEnd() {
         return end;
-    }
-
-    public void setEnd(Coordinates end) {
-        this.end = end;
     }
 }

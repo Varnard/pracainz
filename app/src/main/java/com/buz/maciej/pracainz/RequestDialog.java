@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 
 /**
  * Okno do wprowadzania zlecen
@@ -26,7 +27,7 @@ public class RequestDialog extends DialogFragment {
 
         builder.setView(inflater.inflate(R.layout.request_dialog_layout, null));
 
-        builder.setMessage(R.string.request_dialog)
+        builder
 
                 .setPositiveButton(R.string.request_dialog_confirm, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -40,12 +41,26 @@ public class RequestDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         // Send the negative button event back to the host activity
                         mListener.onDialogNegativeClick(RequestDialog.this);
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
                     }
                 });
+
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
         return builder.create();
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        Button pButton =  ((AlertDialog) getDialog()).getButton(DialogInterface.BUTTON_POSITIVE);
+        Button nButton =  ((AlertDialog) getDialog()).getButton(DialogInterface.BUTTON_NEGATIVE);
+
+        pButton.setBackground(getActivity().getResources().getDrawable(R.drawable.dialog_button_selector));
+        nButton.setBackground(getActivity().getResources().getDrawable(R.drawable.dialog_button_selector));
     }
 
 
