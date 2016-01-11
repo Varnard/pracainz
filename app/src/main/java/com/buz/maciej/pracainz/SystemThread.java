@@ -17,7 +17,7 @@ import java.util.LinkedList;
 public class SystemThread extends Thread{
 
     private boolean active;
-    private boolean rozruch;
+    private boolean rozruch;                                                                            //todo polski!
     public int time;
 
     private Map map;

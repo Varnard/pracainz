@@ -15,6 +15,7 @@ import android.widget.EditText;
 public class SystemActivity extends FragmentActivity
 implements RequestDialog.RequestDialogListener{
 
+    public SystemThread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,10 @@ implements RequestDialog.RequestDialogListener{
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_system);
+
+        thread = new SystemThread(this);
+        thread.setActive(true);
+        thread.start();
     }
 
     @Override
@@ -32,6 +37,23 @@ implements RequestDialog.RequestDialogListener{
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_system, menu);
         return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try
+        {
+            if (thread!=null) {
+                thread.interrupt(); // request to terminate thread in regular way
+                thread.join(500); // wait until thread ends or timeout after 0.5 second
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -58,8 +80,7 @@ implements RequestDialog.RequestDialogListener{
         EditText exitIdEditText = (EditText) dialog.getDialog().findViewById(R.id.exit_id_text);
         Integer requestId = Integer.valueOf(requestIdEditText.getText().toString());
         Integer exitId = Integer.valueOf(exitIdEditText.getText().toString());
-        WizView wizView = (WizView)findViewById(R.id.WizView);
-        wizView.thread.addRequest(requestId,exitId);
+        thread.addRequest(requestId,exitId);
         dialog.dismiss();
     }
 
@@ -71,26 +92,22 @@ implements RequestDialog.RequestDialogListener{
 
     public void mSlow(View view)
     {
-        WizView wizView = (WizView)findViewById(R.id.WizView);
-        wizView.thread.time=10;
+        thread.time=10;
     }
 
     public void mMedium(View view)
     {
-        WizView wizView = (WizView)findViewById(R.id.WizView);
-        wizView.thread.time=3;
+        thread.time=3;
     }
 
     public void mFast(View view)
     {
-        WizView wizView = (WizView)findViewById(R.id.WizView);
-        wizView.thread.time=1;
+        thread.time=1;
     }
 
     public void mReset(View view)
     {
-        WizView wizView = (WizView)findViewById(R.id.WizView);
-        wizView.thread.reset();
+        thread.reset();
     }
 
     public void mAdd(View view)
