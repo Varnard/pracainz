@@ -10,4 +10,10 @@
     <string name="request_dialog_exit_Id">Numer wyjścia</string>
     <string name="request_dialog_confirm">Potwierdź</string>
     <string name="request_dialog_cancel">Anuluj</string>
+    <string name="login_hint">login</string>
+    <string name="password_hint">hasło</string>
+    <string name="login_text">Wprowadź login</string>
+    <string name="password_text">Wprowadź hasło</string>
+    <string name="launch_button">Potwierdź</string>
+    <string name="title_text">System transportu wewnętrznego</string>
 </resources>

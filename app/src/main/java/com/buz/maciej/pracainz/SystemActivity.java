@@ -25,7 +25,11 @@ implements RequestDialog.RequestDialogListener{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_system);
+        Bundle parameters = getIntent().getExtras();
+        if(parameters != null && parameters.containsKey("layout"))
+            setContentView(parameters.getInt("layout"));
+        else
+            setContentView(R.layout.activity_system);
 
         thread = new SystemThread(this);
         thread.setActive(true);

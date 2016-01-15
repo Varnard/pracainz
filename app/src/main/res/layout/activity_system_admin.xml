@@ -19,6 +19,51 @@
         android:layout_marginBottom="10dp"
         android:id="@+id/WizView" />
 
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Fast"
+        android:id="@+id/bFast"
+        android:background="@drawable/button_selector"
+        android:onClick="mFast"
+        android:layout_below="@+id/WizView"
+        android:layout_toLeftOf="@+id/bAdd"
+        android:layout_toStartOf="@+id/bAdd" />
+
+
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Medium"
+        android:id="@+id/bMedium"
+        android:background="@drawable/button_selector"
+        android:onClick="mMedium"
+        android:layout_below="@+id/bFast"
+        android:layout_alignLeft="@+id/bFast"
+        android:layout_alignStart="@+id/bFast" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Slow"
+        android:id="@+id/bSlow"
+        android:background="@drawable/button_selector"
+        android:onClick="mSlow"
+        android:layout_below="@+id/bMedium"
+        android:layout_alignLeft="@+id/bMedium"
+        android:layout_alignStart="@+id/bMedium" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Preset"
+        android:id="@+id/bReset"
+        android:background="@drawable/button_selector"
+        android:onClick="mReset"
+        android:layout_below="@+id/bSlow"
+        android:layout_alignLeft="@+id/bSlow"
+        android:layout_alignStart="@+id/bSlow" />
 
     <Button
         android:layout_width="100dp"
@@ -30,6 +75,17 @@
         android:layout_below="@id/WizView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Serwis"
+        android:id="@+id/bMaintenance"
+        android:background="@drawable/button_selector"
+        android:onClick="mMaintenance"
+        android:layout_below="@+id/bAdd"
+        android:layout_alignLeft="@+id/bAdd"
+        android:layout_alignStart="@+id/bAdd" />
 
 
     <TableLayout

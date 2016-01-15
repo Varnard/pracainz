@@ -241,9 +241,11 @@ public class SystemThread extends Thread{
             {
                 if (!rIterator.isWaiting())
                 {
-                    for (Robot rIterator2 : robotList) {
+                    for (Robot rIterator2 : robotList)
+                    {
                         if (rIterator.getNextPosition().equals(rIterator2.getCurrentPosition()) &&
-                                rIterator.getCurrentPosition().equals(rIterator2.getNextPosition())) {
+                                rIterator.getCurrentPosition().equals(rIterator2.getNextPosition()))
+                        {
                             rIterator.passObstacle(rIterator.getNextPosition(), map);
                             rIterator.determineNextPosition();
                             rIterator2.pause();
