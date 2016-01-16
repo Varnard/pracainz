@@ -23,7 +23,7 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Dodaj"
+        android:text="Dodaj zadanie"
         android:id="@+id/bAdd"
         android:background="@drawable/button_selector"
         android:onClick="mAdd"

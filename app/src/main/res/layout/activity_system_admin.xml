@@ -22,7 +22,7 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Fast"
+        android:text="1x"
         android:id="@+id/bFast"
         android:background="@drawable/button_selector"
         android:onClick="mFast"
@@ -35,7 +35,7 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Medium"
+        android:text="0.3x"
         android:id="@+id/bMedium"
         android:background="@drawable/button_selector"
         android:onClick="mMedium"
@@ -46,7 +46,7 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Slow"
+        android:text="0.1x"
         android:id="@+id/bSlow"
         android:background="@drawable/button_selector"
         android:onClick="mSlow"
@@ -57,7 +57,7 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Preset"
+        android:text="Zestaw"
         android:id="@+id/bReset"
         android:background="@drawable/button_selector"
         android:onClick="mReset"
@@ -68,7 +68,7 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Dodaj"
+        android:text="Dodaj zadanie"
         android:id="@+id/bAdd"
         android:background="@drawable/button_selector"
         android:onClick="mAdd"
@@ -79,13 +79,25 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Serwis"
-        android:id="@+id/bMaintenance"
+        android:text="Rozpocznij serwis"
+        android:id="@+id/bStartMaintenance"
         android:background="@drawable/button_selector"
-        android:onClick="mMaintenance"
+        android:onClick="mStartMaintenance"
         android:layout_below="@+id/bAdd"
         android:layout_alignLeft="@+id/bAdd"
         android:layout_alignStart="@+id/bAdd" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Zakończ serwis"
+        android:id="@+id/bFinishMaintenance"
+        android:background="@drawable/button_selector"
+        android:onClick="mFinishMaintenance"
+        android:layout_below="@id/bStartMaintenance"
+        android:layout_alignLeft="@+id/bStartMaintenance"
+        android:layout_alignStart="@+id/bStartMaintenance"/>
+
 
 
     <TableLayout

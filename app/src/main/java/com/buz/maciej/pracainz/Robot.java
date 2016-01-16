@@ -16,9 +16,15 @@ public class Robot {
     private boolean returning;
     private boolean waiting;
     private boolean unloaded;
+    private boolean maintenance;
     private Task currentTask;
     private Integer id;
     private String status;
+
+
+    Robot()
+    {
+    }
 
     Robot(Coordinates basePosition, int id)
     {
@@ -44,6 +50,21 @@ public class Robot {
     {
         currentTask= new Task(currentPosition,basePosition,basePosition,map);
         returning=true;
+    }
+
+    public void startMaintenance()
+    {
+        maintenance = true;
+    }
+
+    public boolean isMaintained()
+    {
+        return maintenance;
+    }
+
+    public void finishMaintenance()
+    {
+        maintenance = false;
     }
 
     public void pause()
@@ -113,30 +134,31 @@ public class Robot {
             if (!currentTask.isDone())
             {
                 setNextPosition(currentTask.getNextPosition());
-                if (returning)status="returning";
-                else status="working";
+                if (returning)status="powrót";
+                else status="praca";
             }
             else
             {
-                if (returning)status="idle";
+                if (returning)status="bezczynny";
                 else unloading();
             }
 
             if (currentTask.loadSignal() && !returning)loading();
         }
+        if (isMaintained())status="serwis";
     }
 
     private void loading()
     {
         unloaded=false;
-        status="loading";
+        status="załadunek";
         waiting=true;
     }
 
     private void unloading()
     {
         unloaded=true;
-        status="unloading";
+        status="rozładunek";
         waiting=true;
     }
 

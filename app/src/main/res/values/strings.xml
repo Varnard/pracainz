@@ -16,4 +16,7 @@
     <string name="password_text">Wprowadź hasło</string>
     <string name="launch_button">Potwierdź</string>
     <string name="title_text">System transportu wewnętrznego</string>
+    <string name="start_maintenance_dialog">Rozpocznij serwis</string>
+    <string name="finish_maintenance_dialog">Zakończ serwis</string>
+    <string name="maintenance_dialog_Id_hint">1-5</string>
 </resources>

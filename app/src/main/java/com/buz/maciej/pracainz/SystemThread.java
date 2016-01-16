@@ -17,13 +17,12 @@ import java.util.LinkedList;
 public class SystemThread extends Thread{
 
     private boolean active;
-    private boolean rozruch;                                                                            //todo polski!
+    private boolean launch;
     public int time;
 
     private Map map;
     private RequestManager requestManager;
     private Context context;
-
     private LinkedList<Request> requestList = new LinkedList<>();
     private LinkedList<Robot> robotList = new LinkedList<>();
 
@@ -32,7 +31,7 @@ public class SystemThread extends Thread{
         map = new Map(context,3);
         requestManager = new RequestManager(context,3);
         this.context = context;
-        rozruch = true;
+        launch = true;
         time=1;
 
 
@@ -49,6 +48,12 @@ public class SystemThread extends Thread{
         requestList.add(requestManager.getRequest(200,4));
         requestList.add(requestManager.getRequest(648,5));
         requestList.add(requestManager.getRequest(450,6));
+        requestList.add(requestManager.getRequest(57,2));
+        requestList.add(requestManager.getRequest(428,1));
+        requestList.add(requestManager.getRequest(192,3));
+        requestList.add(requestManager.getRequest(500,4));
+        requestList.add(requestManager.getRequest(448,5));
+        requestList.add(requestManager.getRequest(311,6));
 
     }
 
@@ -65,7 +70,6 @@ public class SystemThread extends Thread{
         {
             iterator.drawRobot(canvas, map.getSize());
         }
-
     }
 
     public void setActive(boolean active)
@@ -79,7 +83,7 @@ public class SystemThread extends Thread{
         {
             iterator.pause();
         }
-        if (rozruch)
+        if (launch)
         {
             try
             {
@@ -88,7 +92,7 @@ public class SystemThread extends Thread{
             {
                 e.printStackTrace();
             }
-            rozruch=false;
+            launch =false;
         }
         while (active)
         {
@@ -102,7 +106,7 @@ public class SystemThread extends Thread{
 
                     if (iterator.isTaskless())
                     {
-                        if (requestList.isEmpty())
+                        if (requestList.isEmpty() || iterator.isMaintained())
                         {
                             if (!iterator.isReturning())iterator.returnBase(map);
                         }
@@ -125,24 +129,33 @@ public class SystemThread extends Thread{
 
     public void addRequest(int requestId, int exitId)
     {
-        requestList.add(requestManager.getRequest(requestId,exitId));
+        requestList.add(requestManager.getRequest(requestId, exitId));
+    }
+
+    public void startMaintenance(int robotId)
+    {
+        for (Robot iterator : robotList)
+        {
+            if (iterator.getID().equals(robotId))
+            {
+                iterator.startMaintenance();
+            }
+        }
+    }
+
+    public void finishMaintenance(int robotId)
+    {
+        for (Robot iterator: robotList)
+        {
+            if (iterator.getID().equals(robotId))
+            {
+                iterator.finishMaintenance();
+            }
+        }
     }
 
     public void reset()
     {
-        /*
-        requestList = new LinkedList<>();
-        robotList = new LinkedList<>();
-
-        rozruch = true;
-
-        robotList.add(new Robot(new Coordinates(22,26)));
-        robotList.add(new Robot(new Coordinates(22,28)));
-        robotList.add(new Robot(new Coordinates(22,30)));
-        robotList.add(new Robot(new Coordinates(27,26)));
-        robotList.add(new Robot(new Coordinates(27,28)));
-        robotList.add(new Robot(new Coordinates(27,30)));*/
-
         requestList.add(requestManager.getRequest(5,2));
         requestList.add(requestManager.getRequest(348,1));
         requestList.add(requestManager.getRequest(92,3));

@@ -15,7 +15,7 @@ import android.widget.Button;
  * Okno do wprowadzania zlecen
  * Created by Varn on 2015-12-14.
  */
-public class RequestDialog extends DialogFragment {
+public class FinishMaintenanceDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -25,14 +25,14 @@ public class RequestDialog extends DialogFragment {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        builder.setView(inflater.inflate(R.layout.request_dialog_layout, null));
+        builder.setView(inflater.inflate(R.layout.finish_maintenance_dialog_layout, null));
 
         builder
 
                 .setPositiveButton(R.string.request_dialog_confirm, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Send the positive button event back to the host activity
-                        mListener.onRequestDialogPositiveClick(RequestDialog.this);
+                        mListener.onFinishMaintenanceDialogPositiveClick(FinishMaintenanceDialog.this);
                         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
                     }
@@ -40,7 +40,7 @@ public class RequestDialog extends DialogFragment {
                 .setNegativeButton(R.string.request_dialog_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Send the negative button event back to the host activity
-                        mListener.onRequestDialogNegativeClick(RequestDialog.this);
+                        mListener.onFinishMaintenanceDialogNegativeClick(FinishMaintenanceDialog.this);
                         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
                     }
@@ -64,13 +64,13 @@ public class RequestDialog extends DialogFragment {
     }
 
 
-        public interface RequestDialogListener {
-        void onRequestDialogPositiveClick(DialogFragment dialog);
-        void onRequestDialogNegativeClick(DialogFragment dialog);
+        public interface FinishMaintenanceDialogListener {
+        void onFinishMaintenanceDialogPositiveClick(DialogFragment dialog);
+        void onFinishMaintenanceDialogNegativeClick(DialogFragment dialog);
     }
 
     // Use this instance of the interface to deliver action events
-    RequestDialogListener mListener;
+    FinishMaintenanceDialogListener mListener;
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
     @Override
@@ -79,7 +79,7 @@ public class RequestDialog extends DialogFragment {
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            mListener = (RequestDialogListener) activity;
+            mListener = (FinishMaintenanceDialogListener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()

@@ -22,10 +22,10 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Dodaj"
-        android:id="@+id/bAdd"
+        android:text="Rozpocznij serwis"
+        android:id="@+id/bStartMaintenance"
         android:background="@drawable/button_selector"
-        android:onClick="mAdd"
+        android:onClick="mStartMaintenance"
         android:layout_below="@id/WizView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -33,13 +33,13 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Serwis"
-        android:id="@+id/bMaintenance"
+        android:text="Zakończ serwis"
+        android:id="@+id/bFinishMaintenance"
         android:background="@drawable/button_selector"
-        android:onClick="mMaintenance"
-        android:layout_below="@+id/bAdd"
-        android:layout_alignLeft="@+id/bAdd"
-        android:layout_alignStart="@+id/bAdd" />
+        android:onClick="mFinishMaintenance"
+        android:layout_below="@id/bStartMaintenance"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 
     <TableLayout

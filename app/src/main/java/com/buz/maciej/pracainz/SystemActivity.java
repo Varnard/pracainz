@@ -13,7 +13,9 @@ import android.widget.EditText;
 
 
 public class SystemActivity extends FragmentActivity
-implements RequestDialog.RequestDialogListener{
+implements  RequestDialog.RequestDialogListener,
+            StartMaintenanceDialog.StartMaintenanceDialogListener,
+            FinishMaintenanceDialog.FinishMaintenanceDialogListener{
 
     public SystemThread thread;
 
@@ -77,7 +79,7 @@ implements RequestDialog.RequestDialogListener{
 
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog)
+    public void onRequestDialogPositiveClick(DialogFragment dialog)
     {
 
         EditText requestIdEditText = (EditText) dialog.getDialog().findViewById(R.id.request_id_text);
@@ -89,9 +91,41 @@ implements RequestDialog.RequestDialogListener{
     }
 
     @Override
-    public void onDialogNegativeClick(DialogFragment dialog)
+    public void onRequestDialogNegativeClick(DialogFragment dialog)
+    {
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onStartMaintenanceDialogPositiveClick(DialogFragment dialog)
     {
 
+        EditText MaintenanceIdEditText = (EditText) dialog.getDialog().findViewById(R.id.start_maintenance_id_text);
+        Integer robotId = Integer.valueOf(MaintenanceIdEditText.getText().toString());
+        thread.startMaintenance(robotId);
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onStartMaintenanceDialogNegativeClick(DialogFragment dialog)
+    {
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onFinishMaintenanceDialogPositiveClick(DialogFragment dialog)
+    {
+
+        EditText MaintenanceIdEditText = (EditText) dialog.getDialog().findViewById(R.id.finish_maintenance_id_text);
+        Integer robotId = Integer.valueOf(MaintenanceIdEditText.getText().toString());
+        thread.finishMaintenance(robotId);
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onFinishMaintenanceDialogNegativeClick(DialogFragment dialog)
+    {
+        dialog.dismiss();
     }
 
     public void mSlow(View view)
@@ -112,6 +146,20 @@ implements RequestDialog.RequestDialogListener{
     public void mReset(View view)
     {
         thread.reset();
+    }
+
+    public void mStartMaintenance(View view)
+    {
+        FragmentManager fm = getFragmentManager();
+        StartMaintenanceDialog dialogFragment = new StartMaintenanceDialog();
+        dialogFragment.show(fm, "dialog");
+    }
+
+    public void mFinishMaintenance(View view)
+    {
+        FragmentManager fm = getFragmentManager();
+        FinishMaintenanceDialog dialogFragment = new FinishMaintenanceDialog();
+        dialogFragment.show(fm, "dialog");
     }
 
     public void mAdd(View view)
